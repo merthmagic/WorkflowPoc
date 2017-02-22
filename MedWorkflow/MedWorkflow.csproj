@@ -1,0 +1,84 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{407FD683-960E-4C56-B58B-295377983547}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>MedWorkflow</RootNamespace>
+    <AssemblyName>MedWorkflow</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="ActivityTemplate.cs" />
+    <Compile Include="Exceptions\IllegalWorkflowTemplateException.cs" />
+    <Compile Include="Security\ApproverFilter.cs" />
+    <Compile Include="Audit\AuditTrailEntry.cs" />
+    <Compile Include="Events\WorkflowApproveEvent.cs" />
+    <Compile Include="Events\WorkflowRejectEvent.cs" />
+    <Compile Include="Events\WorkflowStateChangedEvent.cs" />
+    <Compile Include="Exceptions\IllegalStateException.cs" />
+    <Compile Include="Factories\IWorkflowInstanceFactory.cs" />
+    <Compile Include="Factories\WorkflowInstanceFactory.cs" />
+    <Compile Include="IAction.cs" />
+    <Compile Include="IActivityTemplate.cs" />
+    <Compile Include="IActivityInstance.cs" />
+    <Compile Include="IApprovalPolicy.cs" />
+    <Compile Include="Security\IApprover.cs" />
+    <Compile Include="Security\IApproverFilter.cs" />
+    <Compile Include="Security\IApproverRole.cs" />
+    <Compile Include="IForm.cs" />
+    <Compile Include="IWorkflowEngine.cs" />
+    <Compile Include="Configurations\IWorkflowEngineConfigurer.cs" />
+    <Compile Include="IWorkflowInstance.cs" />
+    <Compile Include="IWorkflowService.cs" />
+    <Compile Include="IWorkflowTemplate.cs" />
+    <Compile Include="OperationCode.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Security\ISecurityFacade.cs" />
+    <Compile Include="Utils\WorkflowTemplateValidator.cs" />
+    <Compile Include="Utils\XmlWorkflowTemplateParser.cs" />
+    <Compile Include="WorkflowDelegates.cs" />
+    <Compile Include="WorkFlowEngine.cs" />
+    <Compile Include="WorkflowStatus.cs" />
+    <Compile Include="WorkflowTemplate.cs" />
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
