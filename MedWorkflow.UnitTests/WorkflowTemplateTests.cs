@@ -18,7 +18,7 @@ namespace MedWorkflow.UnitTests
             var template = XmlWorkflowTemplateParser.ParseFromString(xmlString);
             Assert.IsNotNull(template);
             Assert.IsInstanceOf<IWorkflowTemplate>(template);
-            Assert.AreEqual("123",template.TemplateUuid);
+            Assert.AreEqual("WFT123456",template.TemplateUuid);
             Assert.IsNotNull(template.Activities);
         }
     }

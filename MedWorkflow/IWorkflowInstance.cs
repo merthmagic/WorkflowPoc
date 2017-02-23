@@ -28,7 +28,7 @@ namespace MedWorkflow
         /// <summary>
         /// 审批历史
         /// </summary>
-        List<AuditTrailEntry> AuditTrails { get; }
+        ICollection<AuditTrailEntry> AuditTrails { get; }
 
         /// <summary>
         /// 预设过期时间

@@ -1,4 +1,5 @@
 ﻿using System;
+using MedWorkflow.Security;
 
 namespace MedWorkflow.Factories
 {
@@ -9,9 +10,9 @@ namespace MedWorkflow.Factories
         /// </summary>
         /// <param name="template"></param>
         /// <returns></returns>
-        public static IWorkflowInstance Create(IWorkflowTemplate template)
+        public static IWorkflowInstance Create(IWorkflowTemplate template,IForm form,IApprover owner)
         {
-            throw new NotImplementedException();
+            return new WorkflowInstance(template,form,owner);
         }
     }
 }

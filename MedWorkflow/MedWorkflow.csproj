@@ -71,6 +71,7 @@
     <Compile Include="Utils\XmlWorkflowTemplateParser.cs" />
     <Compile Include="WorkflowDelegates.cs" />
     <Compile Include="WorkFlowEngine.cs" />
+    <Compile Include="WorkflowInstance.cs" />
     <Compile Include="WorkflowStatus.cs" />
     <Compile Include="WorkflowTemplate.cs" />
   </ItemGroup>

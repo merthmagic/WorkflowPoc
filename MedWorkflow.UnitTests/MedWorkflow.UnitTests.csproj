@@ -55,6 +55,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="WorkflowInstanceTests.cs" />
     <Compile Include="WorkflowTemplateTests.cs" />
   </ItemGroup>
   <ItemGroup>
