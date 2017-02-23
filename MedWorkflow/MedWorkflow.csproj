@@ -39,8 +39,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Action.cs" />
     <Compile Include="ActivityTemplate.cs" />
     <Compile Include="Exceptions\IllegalWorkflowTemplateException.cs" />
+    <Compile Include="Factories\WorkflowTemplateBuilder.cs" />
     <Compile Include="Security\ApproverFilter.cs" />
     <Compile Include="Audit\AuditTrailEntry.cs" />
     <Compile Include="Events\WorkflowApproveEvent.cs" />

@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Xml;
 using System.Xml.Linq;
+using MedWorkflow.Factories;
+
 // ReSharper disable PossibleNullReferenceException
 
 namespace MedWorkflow.Utils
@@ -67,22 +69,28 @@ namespace MedWorkflow.Utils
             var workflowTemplate = new WorkflowTemplate(templateUuid, DefaultTemplateStatus, null);
 
             //构建ActivityTemplates
+            //注意Lambda表达式造成的deferred execution，可能是造成部分内部空指针的原因
             var query = from item in root.Element("Activities").Elements("Activity")
-                        select BuildActivityTemplate(workflowTemplate, item);
+                        select BuildActivityTemplate(item);
 
-            //流程节点加入到流程模板中，此时双向引用完成
-            workflowTemplate.AddActivityTemplates(query);
+            var builder = new WorkflowTemplateBuilder();
 
-            return workflowTemplate;
+            return builder.SetActivityTemplates(query.ToList())
+                .SetWorkflowTemplate(workflowTemplate)
+                .Build();
         }
 
-        private static IActivityTemplate BuildActivityTemplate(IWorkflowTemplate workflowTemplate, XElement element)
+        private static ActivityTemplate BuildActivityTemplate(XElement element)
         {
-            var activityTemplate = new ActivityTemplate(workflowTemplate);
-            var activityTemplateId = Convert.ToInt32(element.Attribute("id"));
+            var activityTemplate = new ActivityTemplate();
+            var activityTemplateId = Convert.ToInt32(element.Attribute("id").Value);
             var activityTemplateName = element.Element("Name").Value;
+
+            activityTemplate.ActivityTemplateId = activityTemplateId;
+            activityTemplate.Name = activityTemplateName;
+            
             var actionElements = element.Elements("Actions");
-            foreach (var actionElem in actionElements)
+            foreach (var actionElem in actionElements.Elements("Action"))
             {
                 var operation = (OperationCode)Enum.Parse(typeof(OperationCode), actionElem.Attribute("operationCode").Value);
                 var transitTo = 0;
@@ -90,7 +98,8 @@ namespace MedWorkflow.Utils
                 {
                     transitTo = Convert.ToInt32(actionElem.Attribute("transit").Value);
                 }
-                MedWorkflow.Action action = new Action(operation, transitTo);
+                var action = new Action(operation, transitTo);
+                activityTemplate.Actions.Add(action);
             }
             return activityTemplate;
         }

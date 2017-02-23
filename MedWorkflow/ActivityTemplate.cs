@@ -4,14 +4,7 @@ namespace MedWorkflow
 {
     internal class ActivityTemplate : IActivityTemplate
     {
-        private readonly IWorkflowTemplate _workflowTemplate;
-
-        public ActivityTemplate(IWorkflowTemplate workflowTemplate)
-        {
-            _workflowTemplate = workflowTemplate;
-        }
-
-        private IEnumerable<IAction> _allowedActions;
+        private IList<Action> _allowedActions;
 
         public bool BeginActivity { get; set; }
 
@@ -21,12 +14,18 @@ namespace MedWorkflow
 
         public IEnumerable<IAction> AllowedActions
         {
-            get { return _allowedActions ?? (_allowedActions = new List<IAction>()); }
+            get { return Actions; }
         }
 
-        public IWorkflowTemplate WorkflowTemplate
+        public IList<Action> Actions
         {
-            get { return _workflowTemplate; }
+            get { return _allowedActions ?? (_allowedActions = new List<Action>()); }
         }
+ 
+        public string Name { get;  set; }
+
+        public int ActivityTemplateId { get;  set; }
+
+        public IWorkflowTemplate WorkflowTemplate { get; set; }
     }
 }

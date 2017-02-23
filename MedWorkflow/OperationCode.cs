@@ -27,6 +27,10 @@ namespace MedWorkflow
         /// <summary>
         /// 提交审批申请
         /// </summary>
-        Submit
+        Submit,
+        /// <summary>
+        /// 取消
+        /// </summary>
+        Cancel
     }
 }

@@ -5,6 +5,10 @@ namespace MedWorkflow
     public interface IActivityTemplate
     {
         /// <summary>
+        /// 名称
+        /// </summary>
+        string Name { get; }
+        /// <summary>
         /// ActivityTemplate的唯一标识
         /// </summary>
         int ActivityTemplateId { get; }

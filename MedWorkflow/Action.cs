@@ -15,17 +15,11 @@ namespace MedWorkflow
 
         public OperationCode OperationCode { get { return _operation; }}
 
-        public IActivityTemplate Transit
-        {
-            get
-            {
-                if(LocateActivity == null)
-                    throw new InvalidOperationException("Activity locator method not specified.");
+        public IActivityTemplate Transit { get; set; }
 
-                return LocateActivity(_targetActivityId);
-            }
-        }
+        [Obsolete]
+        public Func<int, IActivityTemplate> LocateActivity { get; set; }
 
-        public Func<int, IActivityTemplate> LocateActivity { get; set; } 
+        public int TargetActivityId { get { return _targetActivityId;} }
     }
 }
