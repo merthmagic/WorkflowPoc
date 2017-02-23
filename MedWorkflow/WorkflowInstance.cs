@@ -91,7 +91,7 @@ namespace MedWorkflow
         private void AssertPrivilege(IActivityInstance activityInstance)
         {
             if (!_executionContext.Approver.Roles.Contains(activityInstance.ActivityTemplate.RequiredRole))
-                throw new IllegalStateException();
+                throw new IllegalStateException("用户无权限进行此操作");
         }
 
         /// <summary>
@@ -104,7 +104,7 @@ namespace MedWorkflow
         {
             var ret = activityInstance.ActivityTemplate.AllowedActions.FirstOrDefault(p => p.OperationCode == operationCode);
             if(ret == null)
-                throw new IllegalStateException();
+                throw new IllegalStateException("未能获取对应的Action信息");
             return ret;
         }
 
