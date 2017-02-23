@@ -40,14 +40,17 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Action.cs" />
+    <Compile Include="ActionRecord.cs" />
     <Compile Include="ActivityInstance.cs" />
     <Compile Include="ActivityTemplate.cs" />
     <Compile Include="AssignSpecification.cs" />
+    <Compile Include="Enums.cs" />
     <Compile Include="Exceptions\IllegalWorkflowTemplateException.cs" />
     <Compile Include="Factories\WorkflowTemplateBuilder.cs" />
     <Compile Include="ISessionProvider.cs" />
     <Compile Include="IWorkflowExecutionContext.cs" />
     <Compile Include="IWorkflowSession.cs" />
+    <Compile Include="Repository\IActionRecordRepository.cs" />
     <Compile Include="Repository\IWorkflowInstanceRepository.cs" />
     <Compile Include="Repository\IWorkflowTemplateRepository.cs" />
     <Compile Include="Repository\WorkflowInstanceRepository.cs" />

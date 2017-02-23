@@ -23,7 +23,8 @@ namespace MedWorkflow
         private ICollection<AuditTrailEntry> _auditTrailEntries;
         private readonly IWorkflowExecutionContext _executionContext;
         private IActivityInstance _currentActivityInstance;
-        private bool isDirty = true;
+        private bool _isDirty = true;
+        private IActivityInstance _originateActivityInstance;
 
         public WorkflowInstance(IWorkflowTemplate workflowTemplate, IForm form, IApprover owner)
         {
@@ -71,14 +72,14 @@ namespace MedWorkflow
 
         public IWorkflowExecutionContext ExecutionContext
         {
-            get { throw new NotImplementedException(); }
+            get { return _executionContext; }
         }
 
-        public bool IsDirty { get{return isDirty;} }
+        public bool IsDirty { get { return _isDirty; } }
 
         public void MarkOld()
         {
-            isDirty = false;
+            _isDirty = false;
         }
 
         private void AssertOperation(IActivityInstance activityInstance, OperationCode operationCode)
@@ -89,57 +90,100 @@ namespace MedWorkflow
 
         private void AssertPrivilege(IActivityInstance activityInstance)
         {
-             if(!_executionContext.Approver.Roles.Contains(activityInstance.ActivityTemplate.RequiredRole))
-                 throw new IllegalStateException();
+            if (!_executionContext.Approver.Roles.Contains(activityInstance.ActivityTemplate.RequiredRole))
+                throw new IllegalStateException();
         }
 
-        private IActivityInstance NewActivityInstance(IActivityTemplate activityTemplate)
+        /// <summary>
+        /// 获取当前进行的操作的Action信息
+        /// </summary>
+        /// <param name="activityInstance"></param>
+        /// <param name="operationCode"></param>
+        /// <returns></returns>
+        private IAction GetCurrentAction(IActivityInstance activityInstance, OperationCode operationCode)
         {
-            throw new NotImplementedException();    
+            var ret = activityInstance.ActivityTemplate.AllowedActions.FirstOrDefault(p => p.OperationCode == operationCode);
+            if(ret == null)
+                throw new IllegalStateException();
+            return ret;
+        }
+
+        private ActivityInstance NewActivityInstance(IActivityTemplate activityTemplate)
+        {
+            return new ActivityInstance()
+            {
+                ActivityTemplate = activityTemplate
+            };
         }
 
         #region Operations
         public void Submit(string comment)
         {
-            AssertOperation(Current,OperationCode.Submit);
+            AssertOperation(Current, OperationCode.Submit);
             AssertPrivilege(Current);
-            var activityInstance =
-                NewActivityInstance(
-                    Current.ActivityTemplate.AllowedActions.FirstOrDefault(p => p.OperationCode == OperationCode.Submit)
-                        .Transit);
-            var auditTrail = new AuditTrailEntry(){IsNew = true};
+
+            var action = GetCurrentAction(Current, OperationCode.Submit);
+
+            //判断是否本节点回环
+            if (action.Transit.ActivityTemplateId != Current.ActivityTemplate.ActivityTemplateId)
+            {
+                //非本节点回环，创建下个节点实例
+                var nextActivityInstance = NewActivityInstance(action.Transit);
+
+                //标记已完成
+                _originateActivityInstance = Current;
+                _originateActivityInstance.MarkFinish();
+                _originateActivityInstance.Tail.MarkFinished();
+
+                //替换当前节点
+                Current = nextActivityInstance;
+            }
+
+            //相应的创建Action实例
+            var actionRecord = new ActionRecord();
+            Current.AddAction(actionRecord);
+
+            //当前节点替换
+            var auditTrail = new AuditTrailEntry() { IsNew = true };
             //添加审核日志
             AuditTrails.Add(auditTrail);
+
+            _isDirty = true;
         }
 
         public void Approve(string comment)
         {
             AssertOperation(Current, OperationCode.Approve);
             AssertPrivilege(Current);
+            //TODO: implement
         }
 
         public void Cancel(string comment)
         {
             AssertOperation(Current, OperationCode.Cancel);
             AssertPrivilege(Current);
+            //TODO: implement
         }
 
         public void Reject(string comment)
         {
             AssertOperation(Current, OperationCode.Reject);
             AssertPrivilege(Current);
+            //TODO: implement
         }
 
         public void Assign(AssignSpecification assignSpecification)
         {
             AssertOperation(Current, OperationCode.Assign);
             AssertPrivilege(Current);
+            //TODO: implement
         }
 
         public void Delegate(AssignSpecification assignSpecification)
         {
             AssertOperation(Current, OperationCode.Delegate);
             AssertPrivilege(Current);
+            //TODO: implement
         }
         #endregion
     }
