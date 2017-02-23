@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using MedWorkflow.Security;
 
 namespace MedWorkflow.Factories
@@ -8,13 +10,35 @@ namespace MedWorkflow.Factories
         /// <summary>
         /// 创建工作流实例的工厂方法
         /// </summary>
-        /// <param name="template">流程模板</param>
-        /// <param name="form">表单</param>
-        /// <param name="owner">创建人</param>
+        /// <param name="template"></param>
+        /// <param name="form"></param>
+        /// <param name="context"></param>
         /// <returns></returns>
-        public static IWorkflowInstance Create(IWorkflowTemplate template,IForm form,IApprover owner)
+        public static IWorkflowInstance Create(IWorkflowTemplate template, IForm form, IWorkflowExecutionContext context)
         {
-            return new WorkflowInstance(template,form,owner);
+            var instance =  new WorkflowInstance(template, form, context);
+            return instance;
+        }
+
+        /// <summary>
+        /// 创建工作流实例的工厂方法
+        /// </summary>
+        /// <param name="template"></param>
+        /// <param name="form"></param>
+        /// <param name="owner"></param>
+        /// <param name="context"></param>
+        /// <returns></returns>
+        public static IWorkflowInstance Create(IWorkflowTemplate template, IForm form, IApprover owner, IWorkflowExecutionContext context)
+        {
+            var instance = new WorkflowInstance(template, form, owner, context);
+            var activityInstance = new ActivityInstance
+            {
+                ActivityTemplate = template.Activities.First(),
+                CreatedOn = DateTime.Now,
+                LastUpdatedOn = DateTime.Now
+            };
+            instance.Current = activityInstance;
+            return instance;
         }
     }
 }

@@ -1,10 +1,26 @@
-﻿namespace MedWorkflow
+﻿using System.Collections.Generic;
+
+namespace MedWorkflow
 {
     internal class ActivityInstance : IActivityInstance
     {
+        private ActivityInstanceStatus _status;
+        private ICollection<ActionRecord> _actionRecords = new List<ActionRecord>();
+
+        public ActivityInstance()
+        {
+            _status = ActivityInstanceStatus.Working;
+        }
+
         public IActivityTemplate ActivityTemplate { get; set; }
 
-        public ActivityInstanceStatus Status { get; private set; }
+        public ActivityInstanceStatus Status
+        {
+            get
+            {
+                return _status;
+            }
+        }
 
         public System.DateTime CreatedOn { get; set; }
 
@@ -14,18 +30,21 @@
 
         public void MarkFinish()
         {
-            Status = ActivityInstanceStatus.Finished;
+            _status = ActivityInstanceStatus.Finished;
         }
 
 
-        public System.Collections.Generic.IEnumerable<ActionRecord> ActionRecords { get; set; }
+        public IEnumerable<ActionRecord> ActionRecords
+        {
+            get { return _actionRecords; }
+        }
 
 
         public ActionRecord Tail { get; private set; }
 
         public void AddAction(ActionRecord record)
         {
-            throw new System.NotImplementedException();
+            _actionRecords.Add(record);
         }
     }
 }

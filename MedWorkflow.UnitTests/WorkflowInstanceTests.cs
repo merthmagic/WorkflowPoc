@@ -34,12 +34,12 @@ namespace MedWorkflow.UnitTests
         {
             var xmlString = File.ReadAllText(@"D:\WorkflowTemplatePoc.xml", Encoding.UTF8);
             var template = XmlWorkflowTemplateParser.ParseFromString(xmlString);
-            var workflow = WorkflowInstanceFactory.Create(template, _form, _approver);
+            var workflow = WorkflowInstanceFactory.Create(template, _form, _approver, null);
             Assert.NotNull(workflow);
             Assert.NotNull(workflow.WorkflowTemplate);
-            Assert.AreEqual(template,workflow.WorkflowTemplate);
-            Assert.AreEqual(_form,workflow.Form);
-            Assert.AreEqual(_approver,workflow.Owner);
+            Assert.AreEqual(template, workflow.WorkflowTemplate);
+            Assert.AreEqual(_form, workflow.Form);
+            Assert.AreEqual(_approver, workflow.Owner);
         }
     }
 }

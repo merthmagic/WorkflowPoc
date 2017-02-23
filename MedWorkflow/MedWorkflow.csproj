@@ -46,7 +46,9 @@
     <Compile Include="AssignSpecification.cs" />
     <Compile Include="Enums.cs" />
     <Compile Include="Exceptions\IllegalWorkflowTemplateException.cs" />
+    <Compile Include="Exceptions\WorkflowConflictException.cs" />
     <Compile Include="Factories\WorkflowTemplateBuilder.cs" />
+    <Compile Include="IPolicy.cs" />
     <Compile Include="ISessionProvider.cs" />
     <Compile Include="IWorkflowExecutionContext.cs" />
     <Compile Include="IWorkflowSession.cs" />
@@ -79,6 +81,7 @@
     <Compile Include="OperationCode.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Security\ISecurityFacade.cs" />
+    <Compile Include="Utils\PolicyResolver.cs" />
     <Compile Include="Utils\WorkflowTemplateValidator.cs" />
     <Compile Include="Utils\XmlWorkflowTemplateParser.cs" />
     <Compile Include="WorkflowDelegates.cs" />

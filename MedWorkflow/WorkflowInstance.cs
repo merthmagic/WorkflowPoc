@@ -22,23 +22,23 @@ namespace MedWorkflow
         private readonly IApprover _owner;
         private ICollection<AuditTrailEntry> _auditTrailEntries;
         private readonly IWorkflowExecutionContext _executionContext;
-        private IActivityInstance _currentActivityInstance;
         private bool _isDirty = true;
         private IActivityInstance _originateActivityInstance;
 
-        public WorkflowInstance(IWorkflowTemplate workflowTemplate, IForm form, IApprover owner)
+        public WorkflowInstance(IWorkflowTemplate workflowTemplate, IForm form, IApprover owner, IWorkflowExecutionContext context)
         {
             _workflowTemplate = workflowTemplate;
             _form = form;
             _owner = owner;
-        }
-
-        public WorkflowInstance(IWorkflowTemplate workflowTemplate, IWorkflowExecutionContext context)
-        {
-            _workflowTemplate = workflowTemplate;
             _executionContext = context;
         }
 
+        public WorkflowInstance(IWorkflowTemplate workflowTemplate, IForm form,IWorkflowExecutionContext context)
+        {
+            _workflowTemplate = workflowTemplate;
+            _form = form;
+            _executionContext = context;
+        }
 
         public IWorkflowTemplate WorkflowTemplate
         {
@@ -68,8 +68,11 @@ namespace MedWorkflow
         /// <summary>
         /// 当前节点
         /// </summary>
-        public IActivityInstance Current { get; private set; }
+        public IActivityInstance Current { get;  set; }
 
+        /// <summary>
+        /// 执行上下文
+        /// </summary>
         public IWorkflowExecutionContext ExecutionContext
         {
             get { return _executionContext; }
@@ -82,7 +85,7 @@ namespace MedWorkflow
             _isDirty = false;
         }
 
-        private void AssertOperation(IActivityInstance activityInstance, OperationCode operationCode)
+        private static void AssertOperation(IActivityInstance activityInstance, OperationCode operationCode)
         {
             if (activityInstance.ActivityTemplate.AllowedActions.All(p => p.OperationCode != operationCode))
                 throw new InvalidOperationException("当前节点不允许此操作");
@@ -100,7 +103,7 @@ namespace MedWorkflow
         /// <param name="activityInstance"></param>
         /// <param name="operationCode"></param>
         /// <returns></returns>
-        private IAction GetCurrentAction(IActivityInstance activityInstance, OperationCode operationCode)
+        private static IAction GetCurrentAction(IActivityInstance activityInstance, OperationCode operationCode)
         {
             var ret = activityInstance.ActivityTemplate.AllowedActions.FirstOrDefault(p => p.OperationCode == operationCode);
             if(ret == null)
@@ -108,7 +111,7 @@ namespace MedWorkflow
             return ret;
         }
 
-        private ActivityInstance NewActivityInstance(IActivityTemplate activityTemplate)
+        private static ActivityInstance NewActivityInstance(IActivityTemplate activityTemplate)
         {
             return new ActivityInstance()
             {
@@ -120,7 +123,7 @@ namespace MedWorkflow
         public void Submit(string comment)
         {
             AssertOperation(Current, OperationCode.Submit);
-            AssertPrivilege(Current);
+            //AssertPrivilege(Current);
 
             var action = GetCurrentAction(Current, OperationCode.Submit);
 
@@ -130,10 +133,10 @@ namespace MedWorkflow
                 //非本节点回环，创建下个节点实例
                 var nextActivityInstance = NewActivityInstance(action.Transit);
 
-                //标记已完成
+                //标记该Activity已完成
                 _originateActivityInstance = Current;
                 _originateActivityInstance.MarkFinish();
-                _originateActivityInstance.Tail.MarkFinished();
+                //_originateActivityInstance.Tail.MarkFinished();
 
                 //替换当前节点
                 Current = nextActivityInstance;
