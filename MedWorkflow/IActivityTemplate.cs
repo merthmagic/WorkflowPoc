@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using MedWorkflow.Security;
 
 namespace MedWorkflow
 {
@@ -37,5 +38,10 @@ namespace MedWorkflow
         /// 允许的操作
         /// </summary>
         IEnumerable<IAction> AllowedActions { get; }
+
+        /// <summary>
+        /// 审批所需角色
+        /// </summary>
+        IApproverRole RequiredRole { get; }
     }
 }      

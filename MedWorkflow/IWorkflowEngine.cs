@@ -12,5 +12,13 @@ namespace MedWorkflow
         /// 流程状态更新事件
         /// </summary>
         event WorkflowStateChangedEventHandler OnWorkflowStateChanged;
+
+        IWorkflowSession NewSession(string userId);
+
+        IWorkflowSession Current { get; }
+
+        void RegisterSessionProvider(ISessionProvider sessionProvider);
+
+        void Initialize();
     }
 }

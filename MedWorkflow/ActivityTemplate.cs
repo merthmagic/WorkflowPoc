@@ -27,5 +27,8 @@ namespace MedWorkflow
         public int ActivityTemplateId { get;  set; }
 
         public IWorkflowTemplate WorkflowTemplate { get; set; }
+
+
+        public Security.IApproverRole RequiredRole { get; set; }
     }
 }

@@ -5,6 +5,6 @@
     /// </summary>
     public class AuditTrailEntry
     {
-         
+        internal bool IsNew { get; set; }
     }
 }

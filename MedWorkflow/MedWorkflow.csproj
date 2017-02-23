@@ -40,9 +40,18 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Action.cs" />
+    <Compile Include="ActivityInstance.cs" />
     <Compile Include="ActivityTemplate.cs" />
+    <Compile Include="AssignSpecification.cs" />
     <Compile Include="Exceptions\IllegalWorkflowTemplateException.cs" />
     <Compile Include="Factories\WorkflowTemplateBuilder.cs" />
+    <Compile Include="ISessionProvider.cs" />
+    <Compile Include="IWorkflowExecutionContext.cs" />
+    <Compile Include="IWorkflowSession.cs" />
+    <Compile Include="Repository\IWorkflowInstanceRepository.cs" />
+    <Compile Include="Repository\IWorkflowTemplateRepository.cs" />
+    <Compile Include="Repository\WorkflowInstanceRepository.cs" />
+    <Compile Include="Security\ApprovalRoleResolver.cs" />
     <Compile Include="Security\ApproverFilter.cs" />
     <Compile Include="Audit\AuditTrailEntry.cs" />
     <Compile Include="Events\WorkflowApproveEvent.cs" />
@@ -62,7 +71,7 @@
     <Compile Include="IWorkflowEngine.cs" />
     <Compile Include="Configurations\IWorkflowEngineConfigurer.cs" />
     <Compile Include="IWorkflowInstance.cs" />
-    <Compile Include="IWorkflowService.cs" />
+    <Compile Include="Services\IWorkflowService.cs" />
     <Compile Include="IWorkflowTemplate.cs" />
     <Compile Include="OperationCode.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

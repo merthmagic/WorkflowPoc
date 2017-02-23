@@ -11,6 +11,10 @@ namespace MedWorkflow
     public interface IWorkflowInstance
     {
         /// <summary>
+        /// 流程实例的执行上下文
+        /// </summary>
+        IWorkflowExecutionContext ExecutionContext { get; }
+        /// <summary>
         /// 创建此流程的工作流模板
         /// </summary>
         IWorkflowTemplate WorkflowTemplate { get; }
@@ -34,5 +38,24 @@ namespace MedWorkflow
         /// 预设过期时间
         /// </summary>
         DateTime ExpireOn { get; }
+
+        /// <summary>
+        /// 当前节点
+        /// </summary>
+        IActivityInstance Current { get; }
+
+        #region Operations
+        void Submit(string comment);
+
+        void Approve(string comment);
+
+        void Cancel(string comment);
+
+        void Reject(string comment);
+
+        void Assign(AssignSpecification assignSpecification);
+
+        void Delegate(AssignSpecification assignSpecification);
+        #endregion
     }
 }
