@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Security.Cryptography.X509Certificates;
 
 namespace MedWorkflow
@@ -13,12 +14,12 @@ namespace MedWorkflow
         /// </summary>
         event WorkflowStateChangedEventHandler OnWorkflowStateChanged;
 
-        IWorkflowSession NewSession(string userId);
-
         IWorkflowSession Current { get; }
 
         void RegisterSessionProvider(ISessionProvider sessionProvider);
 
         void Initialize();
+
+        IEnumerable<IWorkflowTemplate> AvailableWorkflowTemplates { get; } 
     }
 }

@@ -30,6 +30,7 @@ namespace MedWorkflow.Factories
         /// <returns></returns>
         public static IWorkflowInstance Create(IWorkflowTemplate template, IForm form, IApprover owner, IWorkflowExecutionContext context)
         {
+            //新建第一个activity实例，流程owner进行提交
             var instance = new WorkflowInstance(template, form, owner, context);
             var activityInstance = new ActivityInstance
             {

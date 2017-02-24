@@ -44,9 +44,12 @@
     <Compile Include="ActivityInstance.cs" />
     <Compile Include="ActivityTemplate.cs" />
     <Compile Include="AssignSpecification.cs" />
+    <Compile Include="Configurations\EnvConfiguration.cs" />
+    <Compile Include="EngineContext.cs" />
     <Compile Include="Enums.cs" />
     <Compile Include="Exceptions\IllegalWorkflowTemplateException.cs" />
     <Compile Include="Exceptions\WorkflowConflictException.cs" />
+    <Compile Include="Factories\ActivityInstanceBuilder.cs" />
     <Compile Include="Factories\WorkflowTemplateBuilder.cs" />
     <Compile Include="IPolicy.cs" />
     <Compile Include="ISessionProvider.cs" />
@@ -57,6 +60,7 @@
     <Compile Include="Repository\IWorkflowTemplateRepository.cs" />
     <Compile Include="Repository\WorkflowInstanceRepository.cs" />
     <Compile Include="Security\ApprovalRoleResolver.cs" />
+    <Compile Include="Security\Approver.cs" />
     <Compile Include="Security\ApproverFilter.cs" />
     <Compile Include="Audit\AuditTrailEntry.cs" />
     <Compile Include="Events\WorkflowApproveEvent.cs" />
@@ -69,6 +73,7 @@
     <Compile Include="IActivityTemplate.cs" />
     <Compile Include="IActivityInstance.cs" />
     <Compile Include="IApprovalPolicy.cs" />
+    <Compile Include="Security\ApproverRole.cs" />
     <Compile Include="Security\IApprover.cs" />
     <Compile Include="Security\IApproverFilter.cs" />
     <Compile Include="Security\IApproverRole.cs" />
@@ -86,6 +91,7 @@
     <Compile Include="Utils\XmlWorkflowTemplateParser.cs" />
     <Compile Include="WorkflowDelegates.cs" />
     <Compile Include="WorkFlowEngine.cs" />
+    <Compile Include="WorkflowExecutionContext.cs" />
     <Compile Include="WorkflowInstance.cs" />
     <Compile Include="WorkflowStatus.cs" />
     <Compile Include="WorkflowTemplate.cs" />

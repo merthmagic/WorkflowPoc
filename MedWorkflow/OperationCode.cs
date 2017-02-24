@@ -5,7 +5,6 @@ namespace MedWorkflow
     /// <summary>
     /// 操作类型
     /// </summary>
-    [Flags]
     public enum OperationCode
     {
         /// <summary>

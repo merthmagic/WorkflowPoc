@@ -4,7 +4,9 @@ using System.Diagnostics.CodeAnalysis;
 using System.Dynamic;
 using System.Linq;
 using MedWorkflow.Audit;
+using MedWorkflow.Configurations;
 using MedWorkflow.Exceptions;
+using MedWorkflow.Factories;
 using MedWorkflow.Security;
 
 namespace MedWorkflow
@@ -93,6 +95,9 @@ namespace MedWorkflow
 
         private void AssertPrivilege(IActivityInstance activityInstance)
         {
+            if (EnvConfiguration.PermissionCheckOff)
+                return;
+
             if (!_executionContext.Approver.Roles.Contains(activityInstance.ActivityTemplate.RequiredRole))
                 throw new IllegalStateException("用户无权限进行此操作");
         }
@@ -113,16 +118,15 @@ namespace MedWorkflow
 
         private static ActivityInstance NewActivityInstance(IActivityTemplate activityTemplate)
         {
-            return new ActivityInstance()
-            {
-                ActivityTemplate = activityTemplate
-            };
+            var builder = new ActivityInstanceBuilder(activityTemplate);
+            return builder.Build();
         }
 
         #region Operations
         public void Submit(string comment)
         {
             AssertOperation(Current, OperationCode.Submit);
+            //提交时不进行权限验证，后面可能要加上，某些用户可能不具备提交特定流程的权限
             //AssertPrivilege(Current);
 
             var action = GetCurrentAction(Current, OperationCode.Submit);
@@ -158,7 +162,13 @@ namespace MedWorkflow
         {
             AssertOperation(Current, OperationCode.Approve);
             AssertPrivilege(Current);
-            //TODO: implement
+
+            //构建下一个Activity Instance
+            var activityTemplate = Current.ActivityTemplate.AllowedActions.FirstOrDefault(p => p.OperationCode == OperationCode.Approve)
+                .Transit;
+            var nextActivityInstance = NewActivityInstance(activityTemplate);
+            _originateActivityInstance = Current;
+            Current = nextActivityInstance;
         }
 
         public void Cancel(string comment)
@@ -172,7 +182,12 @@ namespace MedWorkflow
         {
             AssertOperation(Current, OperationCode.Reject);
             AssertPrivilege(Current);
-            //TODO: implement
+
+            var activityTemplate = Current.ActivityTemplate.AllowedActions.FirstOrDefault(p => p.OperationCode == OperationCode.Reject)
+                .Transit;
+            var nextActivityInstance = NewActivityInstance(activityTemplate);
+            _originateActivityInstance = Current;
+            Current = nextActivityInstance;
         }
 
         public void Assign(AssignSpecification assignSpecification)
