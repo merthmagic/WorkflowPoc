@@ -6,7 +6,7 @@ namespace MedWorkflow
     /// <summary>
     /// 默认工作流引擎
     /// </summary>
-    internal class WorkFlowEngine:IWorkflowEngine
+    internal class WorkFlowEngine : IWorkflowEngine
     {
         private ISessionProvider _sessionProvider;
 
