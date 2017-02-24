@@ -57,7 +57,7 @@ namespace MedWorkflow.Demo
             var template = workflowEngine.AvailableWorkflowTemplates
                 .FirstOrDefault(p => p.TemplateUuid == "WFT123456");
 
-            var instance = session.NeWorkflowInstance(template);
+            var instance = session.NeWorkflowInstance(template,"Contract","123456");
 
             instance.Submit("提交申请");
             session.SaveInstance(instance);

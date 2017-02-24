@@ -9,7 +9,7 @@ namespace MedWorkflow
     {
         IApprover CurrentUser { get; }
 
-        IWorkflowInstance NeWorkflowInstance(IWorkflowTemplate template);
+        IWorkflowInstance NeWorkflowInstance(IWorkflowTemplate template,string formType,string formId);
 
         void SaveInstance(IWorkflowInstance instance);
 
