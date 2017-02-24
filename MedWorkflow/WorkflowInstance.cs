@@ -12,9 +12,7 @@ using MedWorkflow.Security;
 namespace MedWorkflow
 {
     /// <summary>
-    /// <remarks>
-    /// 禁用了空指针检查，内部已有方法进行Assert
-    /// </remarks>
+    /// 工作流实例的内部默认实现
     /// </summary>
     [SuppressMessage("ReSharper", "PossibleNullReferenceException")]
     internal class WorkflowInstance : IWorkflowInstance
@@ -26,6 +24,7 @@ namespace MedWorkflow
         private readonly IWorkflowExecutionContext _executionContext;
         private bool _isDirty = true;
         private IActivityInstance _originateActivityInstance;
+
 
         public WorkflowInstance(IWorkflowTemplate workflowTemplate, IForm form, IApprover owner, IWorkflowExecutionContext context)
         {
@@ -42,6 +41,9 @@ namespace MedWorkflow
             _executionContext = context;
         }
 
+        /// <summary>
+        /// 流程对应的模板
+        /// </summary>
         public IWorkflowTemplate WorkflowTemplate
         {
             get { return _workflowTemplate; }
@@ -52,20 +54,34 @@ namespace MedWorkflow
             get { return _form; }
         }
 
+        /// <summary>
+        /// 流程发起人
+        /// </summary>
         public IApprover Owner
         {
             get { return _owner; }
         }
 
+        /// <summary>
+        /// 审批记录
+        /// </summary>
         public ICollection<AuditTrailEntry> AuditTrails
         {
             get { return _auditTrailEntries ?? (_auditTrailEntries = new List<AuditTrailEntry>()); }
         }
 
+        /// <summary>
+        /// 流程作废时间
+        /// </summary>
         public DateTime ExpireOn
         {
-            get { throw new NotSupportedException(); }
+            get { return DateTime.MaxValue; }
         }
+
+        /// <summary>
+        /// 实例版本
+        /// </summary>
+        public long InstanceVersion { get; set; }
 
         /// <summary>
         /// 当前节点

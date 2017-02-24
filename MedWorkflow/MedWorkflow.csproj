@@ -39,6 +39,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AbstractWorkflowSession.cs" />
     <Compile Include="Action.cs" />
     <Compile Include="ActionRecord.cs" />
     <Compile Include="ActivityInstance.cs" />
@@ -55,6 +56,8 @@
     <Compile Include="ISessionProvider.cs" />
     <Compile Include="IWorkflowExecutionContext.cs" />
     <Compile Include="IWorkflowSession.cs" />
+    <Compile Include="PhantomSessionProvider.cs" />
+    <Compile Include="PhantomWorkflowSession.cs" />
     <Compile Include="Repository\IActionRecordRepository.cs" />
     <Compile Include="Repository\IWorkflowInstanceRepository.cs" />
     <Compile Include="Repository\IWorkflowTemplateRepository.cs" />

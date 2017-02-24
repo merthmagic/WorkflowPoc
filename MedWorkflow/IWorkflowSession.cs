@@ -1,4 +1,5 @@
-﻿using MedWorkflow.Security;
+﻿using System.Collections.Generic;
+using MedWorkflow.Security;
 
 namespace MedWorkflow
 {
@@ -14,5 +15,7 @@ namespace MedWorkflow
         void SaveInstance(IWorkflowInstance instance);
 
         IWorkflowInstance LoadWorkflowInstance(string workflowInstanceId);
+
+        IEnumerable<IWorkflowInstance> TodoList { get; } 
     }
 }

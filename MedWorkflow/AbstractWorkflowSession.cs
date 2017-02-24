@@ -24,5 +24,10 @@
         {
             throw new System.NotImplementedException();
         }
+
+        public System.Collections.Generic.IEnumerable<IWorkflowInstance> TodoList
+        {
+            get { throw new System.NotImplementedException(); }
+        }
     }
 }
