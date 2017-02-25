@@ -30,6 +30,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Dapper, Version=1.50.2.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Dapper.1.50.2\lib\net40\Dapper.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -46,6 +50,16 @@
     <Compile Include="ActivityTemplate.cs" />
     <Compile Include="AssignSpecification.cs" />
     <Compile Include="Configurations\EnvConfiguration.cs" />
+    <Compile Include="Data\DataManager.cs" />
+    <Compile Include="Data\DbContext.cs" />
+    <Compile Include="Data\DbFactory.cs" />
+    <Compile Include="Data\Entity\ActionEntity.cs" />
+    <Compile Include="Data\Entity\ActivityInstanceEntity.cs" />
+    <Compile Include="Data\Entity\WorkflowInstanceEntity.cs" />
+    <Compile Include="Data\Mapper\AbstractMapper.cs" />
+    <Compile Include="Data\Mapper\ActionMapper.cs" />
+    <Compile Include="Data\Mapper\ActivityInstanceMapper.cs" />
+    <Compile Include="Data\Mapper\WorkflowInstanceEntityMapper.cs" />
     <Compile Include="EngineContext.cs" />
     <Compile Include="Enums.cs" />
     <Compile Include="Exceptions\IllegalWorkflowTemplateException.cs" />
@@ -62,6 +76,7 @@
     <Compile Include="Repository\IWorkflowInstanceRepository.cs" />
     <Compile Include="Repository\IWorkflowTemplateRepository.cs" />
     <Compile Include="Repository\WorkflowInstanceRepository.cs" />
+    <Compile Include="Repository\WorkflowTemplateRepository.cs" />
     <Compile Include="Security\ApprovalRoleResolver.cs" />
     <Compile Include="Security\Approver.cs" />
     <Compile Include="Security\ApproverFilter.cs" />
@@ -98,6 +113,9 @@
     <Compile Include="WorkflowInstance.cs" />
     <Compile Include="WorkflowStatus.cs" />
     <Compile Include="WorkflowTemplate.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -1,4 +1,6 @@
 ﻿using System;
+using Dapper;
+using MedWorkflow.Data;
 using MedWorkflow.Exceptions;
 
 namespace MedWorkflow.Repository
@@ -33,6 +35,8 @@ namespace MedWorkflow.Repository
 
         public void Save(IWorkflowInstance workflowInstance)
         {
+            //需要先判断数据版本
+
             //TODO: implement it
         }
     }
