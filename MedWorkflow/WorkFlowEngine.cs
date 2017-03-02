@@ -22,14 +22,6 @@ namespace MedWorkflow
             _workflowTemplateRepository = new WorkflowTemplateRepository();
         }
 
-        public IWorkflowSession WorkflowSession
-        {
-            get
-            {
-                var session = new DefaultWorkflowSession();
-                return session;
-            }
-        }
 
         public void RegisterUserCredentialsProvider(IUserCredentialsProvider userCredentialsProvider)
         {
@@ -60,6 +52,13 @@ namespace MedWorkflow
                     throw new IllegalStateException("未注册Session Provider");
                 return _userCredentialsProvider;
             }
+        }
+
+
+        public IWorkflowSession NewSession()
+        {
+            var session = new DefaultWorkflowSession();
+            return session;
         }
     }
 }

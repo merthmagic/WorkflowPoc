@@ -12,7 +12,7 @@ namespace MedWorkflow
         /// </summary>
         event WorkflowStateChangedEventHandler OnWorkflowStateChanged;
 
-        IWorkflowSession WorkflowSession { get; }
+        IWorkflowSession NewSession();
 
         void RegisterUserCredentialsProvider(IUserCredentialsProvider sessionProvider);
 

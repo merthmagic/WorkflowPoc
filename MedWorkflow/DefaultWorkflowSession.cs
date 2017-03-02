@@ -6,11 +6,6 @@ namespace MedWorkflow
 {
     internal class DefaultWorkflowSession : AbstractWorkflowSession
     {
-        public DefaultWorkflowSession()
-        {
-            
-        }
-
         public override IApprover CurrentUser
         {
             get { return EngineContext.Current.RegisteredUserCredentialsProviderProvider.Current; }

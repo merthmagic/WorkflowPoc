@@ -20,5 +20,15 @@ namespace MedWorkflow.UnitTests
             var workflowTemplate = _workflowEngine.LoadWorkflowTemplate("WFT123456");
             Assert.NotNull(workflowTemplate);
         }
+
+        [Test]
+        public void WorkflowInstanceCreationTest()
+        {
+            var workflowTemplate = _workflowEngine.LoadWorkflowTemplate("WFT123456");
+            var session = _workflowEngine.NewSession();
+            var instance = session.NewWorkflowInstance(workflowTemplate, "CONTRACT", "123");
+            Assert.NotNull(instance);
+            Assert.AreEqual(workflowTemplate,instance.WorkflowTemplate);
+        }
     }
 }

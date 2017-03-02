@@ -25,7 +25,7 @@ namespace MedWorkflow.Demo
             };
 
             //获取会话，通过会话进行流程相关操作
-            var session = workflowEngine.WorkflowSession;
+            var session = workflowEngine.NewSession();
 
             var template = workflowEngine.LoadWorkflowTemplate("WFT123456");
 
@@ -46,7 +46,7 @@ namespace MedWorkflow.Demo
 
             workflowEngine.RegisterUserCredentialsProvider(sessionProvider);
 
-            var session = workflowEngine.WorkflowSession;
+            var session = workflowEngine.NewSession();
 
             var instance =
                 session.TodoList.FirstOrDefault(p => p.Form.FormType == "Contract" && p.Form.FormId == "123456");
