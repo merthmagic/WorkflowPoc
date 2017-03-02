@@ -5,7 +5,7 @@ using MedWorkflow.Utils;
 
 namespace MedWorkflow.Repository
 {
-    public class WorkflowTemplateRepository
+    internal class WorkflowTemplateRepository
     {
         private readonly Dictionary<string, IWorkflowTemplate> _cachedWorkflowTemplates;
 
@@ -23,6 +23,14 @@ namespace MedWorkflow.Repository
             _cachedWorkflowTemplates.Add(workflowTemplateId, template);
             return _cachedWorkflowTemplates[workflowTemplateId];
         }
+
+        public ICollection<IWorkflowTemplate> AvailableWorkflowTemplates
+        {
+            get
+            {
+                return new List<IWorkflowTemplate>();
+            }
+        } 
 
         private IWorkflowTemplate DoLoadTemplate(string workflowTemplateId)
         {

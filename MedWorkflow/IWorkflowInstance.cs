@@ -8,8 +8,13 @@ namespace MedWorkflow
     /// <summary>
     /// 工作流实例
     /// </summary>
-    public interface IWorkflowInstance
+    public interface IWorkflowInstance : IBusinessBase
     {
+        /// <summary>
+        /// 流程实例的唯一标识
+        /// </summary>
+        string WorkflowInstanceId { get; }
+
         /// <summary>
         /// 创建此流程的工作流模板
         /// </summary>

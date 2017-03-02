@@ -17,8 +17,8 @@ namespace MedWorkflow
 
         public WorkFlowEngine()
         {
-            //TODO:use DI
-            _workflowTemplateRepository = new WorkflowTemplateRepository();    
+            //TODO:Use dependency injection to loose couple
+            _workflowTemplateRepository = new WorkflowTemplateRepository();
         }
 
         public IWorkflowSession Current
@@ -33,15 +33,12 @@ namespace MedWorkflow
 
         public void Initialize()
         {
-            
+
         }
 
         public IEnumerable<IWorkflowTemplate> AvailableWorkflowTemplates
         {
-            get
-            {
-                return new List<IWorkflowTemplate>();
-            }
+            get { return _workflowTemplateRepository.AvailableWorkflowTemplates; }
         }
 
         public IWorkflowTemplate LoadWorkflowTemplate(string workflowTemplateId)

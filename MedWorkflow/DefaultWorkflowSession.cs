@@ -39,7 +39,7 @@ namespace MedWorkflow
             throw new System.NotImplementedException();
         }
 
-        public override IWorkflowInstance NeWorkflowInstance(IWorkflowTemplate template, string formType, string formId)
+        public override IWorkflowInstance NewWorkflowInstance(IWorkflowTemplate template, string formType, string formId)
         {
             var instance = WorkflowInstanceFactory.Create(template, new Form(formType, formId), CurrentUser,
                 new WorkflowExecutionContext() { Approver = CurrentUser });

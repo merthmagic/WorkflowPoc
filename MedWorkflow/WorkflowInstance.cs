@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
-using System.Dynamic;
 using System.Linq;
 using MedWorkflow.Audit;
 using MedWorkflow.Configurations;
@@ -13,9 +12,10 @@ namespace MedWorkflow
 {
     /// <summary>
     /// 工作流实例的内部默认实现
+    /// <remarks>工作流业务聚合根</remarks>
     /// </summary>
     [SuppressMessage("ReSharper", "PossibleNullReferenceException")]
-    internal class WorkflowInstance : IWorkflowInstance
+    internal class WorkflowInstance :IWorkflowInstance
     {
         private readonly IWorkflowTemplate _workflowTemplate;
         private readonly IForm _form;
@@ -23,8 +23,8 @@ namespace MedWorkflow
         private ICollection<AuditTrailEntry> _auditTrailEntries;
         private readonly WorkflowExecutionContext _executionContext;
         private bool _isDirty = true;
+        private bool _isNew = true;
         private IActivityInstance _originateActivityInstance;
-
 
         public WorkflowInstance(IWorkflowTemplate workflowTemplate, IForm form, IApprover owner, WorkflowExecutionContext context)
         {
@@ -32,18 +32,20 @@ namespace MedWorkflow
             _form = form;
             _owner = owner;
             _executionContext = context;
+            _isNew = true;
         }
 
-        public WorkflowInstance(IWorkflowTemplate workflowTemplate, IForm form,WorkflowExecutionContext context)
+        public WorkflowInstance(IWorkflowTemplate workflowTemplate, IForm form, WorkflowExecutionContext context)
         {
             _workflowTemplate = workflowTemplate;
             _form = form;
             _executionContext = context;
+            _isNew = true;
         }
 
-        /// <summary>
-        /// 流程对应的模板
-        /// </summary>
+        public string WorkflowInstanceId { get; internal set; }
+
+
         public IWorkflowTemplate WorkflowTemplate
         {
             get { return _workflowTemplate; }
@@ -54,53 +56,28 @@ namespace MedWorkflow
             get { return _form; }
         }
 
-        /// <summary>
-        /// 流程发起人
-        /// </summary>
         public IApprover Owner
         {
             get { return _owner; }
         }
 
-        /// <summary>
-        /// 审批记录
-        /// </summary>
         public ICollection<AuditTrailEntry> AuditTrails
         {
             get { return _auditTrailEntries ?? (_auditTrailEntries = new List<AuditTrailEntry>()); }
         }
 
-        /// <summary>
-        /// 流程作废时间
-        /// </summary>
         public DateTime ExpireOn
         {
             get { return DateTime.MaxValue; }
         }
 
-        /// <summary>
-        /// 实例版本
-        /// </summary>
         public long InstanceVersion { get; set; }
 
-        /// <summary>
-        /// 当前节点
-        /// </summary>
-        public IActivityInstance Current { get;  set; }
+        public IActivityInstance Current { get; set; }
 
-        /// <summary>
-        /// 执行上下文
-        /// </summary>
         public WorkflowExecutionContext ExecutionContext
         {
             get { return _executionContext; }
-        }
-
-        public bool IsDirty { get { return _isDirty; } }
-
-        public void MarkOld()
-        {
-            _isDirty = false;
         }
 
         private static void AssertOperation(IActivityInstance activityInstance, OperationCode operationCode)
@@ -118,16 +95,10 @@ namespace MedWorkflow
                 throw new IllegalStateException("用户无权限进行此操作");
         }
 
-        /// <summary>
-        /// 获取当前进行的操作的Action信息
-        /// </summary>
-        /// <param name="activityInstance"></param>
-        /// <param name="operationCode"></param>
-        /// <returns></returns>
         private static IAction GetCurrentAction(IActivityInstance activityInstance, OperationCode operationCode)
         {
             var ret = activityInstance.ActivityTemplate.AllowedActions.FirstOrDefault(p => p.OperationCode == operationCode);
-            if(ret == null)
+            if (ret == null)
                 throw new IllegalStateException("未能获取对应的Action信息");
             return ret;
         }
@@ -220,5 +191,42 @@ namespace MedWorkflow
             //TODO: implement
         }
         #endregion
+
+        public bool IsNew
+        {
+            get { return _isNew; }
+        }
+
+        public bool IsTransient
+        {
+            get { return false; }
+        }
+
+        public bool IsDirty { get { return _isDirty; } }
+
+        public void MarkOld()
+        {
+            _isNew = false;
+        }
+
+        public override string ToString()
+        {
+            return string.Format("WorkflowInstance<Uid:{0}>", WorkflowInstanceId);
+        }
+
+        public override int GetHashCode()
+        {
+            return WorkflowInstanceId.GetHashCode();
+        }
+
+        public override bool Equals(object obj)
+        {
+            var instance = obj as WorkflowInstance;
+            if (instance != null)
+            {
+                return WorkflowInstanceId == instance.WorkflowInstanceId;
+            }
+            return false;
+        }
     }
 }

@@ -10,12 +10,6 @@ namespace MedWorkflow.Demo
             NewInstanceAndSubmit();
         }
 
-        static void SimpleRun()
-        {
-            
-        }
-
-
         static void NewInstanceAndSubmit()
         {
             var workflowEngine = EngineContext.Current;
@@ -33,12 +27,9 @@ namespace MedWorkflow.Demo
             //获取会话，通过会话进行流程相关操作
             var session = workflowEngine.Current;
 
-            //var template = workflowEngine.AvailableWorkflowTemplates
-            //    .FirstOrDefault(p => p.TemplateUuid == "WFT123456");
-
             var template = workflowEngine.LoadWorkflowTemplate("WFT123456");
 
-            var instance = session.NeWorkflowInstance(template, "Contract", "123456");
+            var instance = session.NewWorkflowInstance(template, "Contract", "123456");
 
             instance.Submit("提交申请");
             session.SaveInstance(instance);

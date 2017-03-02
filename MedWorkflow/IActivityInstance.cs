@@ -4,7 +4,7 @@ using MedWorkflow.Security;
 
 namespace MedWorkflow
 {
-    public interface IActivityInstance
+    public interface IActivityInstance:IBusinessBase
     {
         IActivityTemplate ActivityTemplate { get; }
 

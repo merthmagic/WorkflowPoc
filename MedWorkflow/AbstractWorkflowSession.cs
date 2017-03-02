@@ -20,7 +20,7 @@ namespace MedWorkflow
 
         public abstract IWorkflowInstance LoadWorkflowInstance(string workflowInstanceId);
 
-        public abstract IWorkflowInstance NeWorkflowInstance(IWorkflowTemplate template, string formType, string formId);
+        public abstract IWorkflowInstance NewWorkflowInstance(IWorkflowTemplate template, string formType, string formId);
         
         public abstract IEnumerable<IWorkflowInstance> TodoList { get; }
     }
