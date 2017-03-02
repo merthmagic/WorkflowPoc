@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using MedWorkflow.Repository;
 
 namespace MedWorkflow
 {
@@ -10,7 +11,15 @@ namespace MedWorkflow
     {
         private ISessionProvider _sessionProvider;
 
+        private readonly WorkflowTemplateRepository _workflowTemplateRepository;
+
         public event WorkflowStateChangedEventHandler OnWorkflowStateChanged;
+
+        public WorkFlowEngine()
+        {
+            //TODO:use DI
+            _workflowTemplateRepository = new WorkflowTemplateRepository();    
+        }
 
         public IWorkflowSession Current
         {
@@ -24,15 +33,20 @@ namespace MedWorkflow
 
         public void Initialize()
         {
-            //TODO:
+            
         }
 
-        public System.Collections.Generic.IEnumerable<IWorkflowTemplate> AvailableWorkflowTemplates
+        public IEnumerable<IWorkflowTemplate> AvailableWorkflowTemplates
         {
             get
             {
                 return new List<IWorkflowTemplate>();
             }
+        }
+
+        public IWorkflowTemplate LoadWorkflowTemplate(string workflowTemplateId)
+        {
+            return _workflowTemplateRepository.Find(workflowTemplateId);
         }
     }
 }

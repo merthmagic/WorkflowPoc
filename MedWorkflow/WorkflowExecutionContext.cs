@@ -1,6 +1,6 @@
 ﻿namespace MedWorkflow
 {
-    public class WorkflowExecutionContext:IWorkflowExecutionContext
+    internal class WorkflowExecutionContext
     {
         public Security.IApprover Approver { get; set; }
     }

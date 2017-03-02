@@ -11,10 +11,6 @@ namespace MedWorkflow
     public interface IWorkflowInstance
     {
         /// <summary>
-        /// 流程实例的执行上下文
-        /// </summary>
-        IWorkflowExecutionContext ExecutionContext { get; }
-        /// <summary>
         /// 创建此流程的工作流模板
         /// </summary>
         IWorkflowTemplate WorkflowTemplate { get; }

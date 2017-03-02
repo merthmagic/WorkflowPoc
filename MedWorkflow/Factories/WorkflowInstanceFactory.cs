@@ -5,7 +5,7 @@ using MedWorkflow.Security;
 
 namespace MedWorkflow.Factories
 {
-    public class WorkflowInstanceFactory
+    internal class WorkflowInstanceFactory
     {
         /// <summary>
         /// 创建工作流实例的工厂方法
@@ -14,21 +14,21 @@ namespace MedWorkflow.Factories
         /// <param name="form"></param>
         /// <param name="context"></param>
         /// <returns></returns>
-        public static IWorkflowInstance Create(IWorkflowTemplate template, IForm form, IWorkflowExecutionContext context)
+        public static IWorkflowInstance Create(IWorkflowTemplate template, IForm form, WorkflowExecutionContext context)
         {
             var instance =  new WorkflowInstance(template, form, context);
             return instance;
         }
 
         /// <summary>
-        /// 创建工作流实例的工厂方法
+        /// 创建工作流实例的工厂方法(新流程)
         /// </summary>
         /// <param name="template"></param>
         /// <param name="form"></param>
         /// <param name="owner"></param>
         /// <param name="context"></param>
         /// <returns></returns>
-        public static IWorkflowInstance Create(IWorkflowTemplate template, IForm form, IApprover owner, IWorkflowExecutionContext context)
+        public static IWorkflowInstance Create(IWorkflowTemplate template, IForm form, IApprover owner, WorkflowExecutionContext context)
         {
             //新建第一个activity实例，流程owner进行提交
             var instance = new WorkflowInstance(template, form, owner, context);

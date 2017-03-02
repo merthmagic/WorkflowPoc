@@ -7,7 +7,7 @@ namespace MedWorkflow
 
         public IWorkflowSession Current
         {
-            get { return new PhantomWorkflowSession(); }
+            get { return new DefaultWorkflowSession(); }
         }
     }
 }

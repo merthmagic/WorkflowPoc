@@ -1,12 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
+﻿using System.Linq;
 using MedWorkflow.Exceptions;
-using MedWorkflow.Factories;
-using MedWorkflow.Security;
-using MedWorkflow.Utils;
 
 namespace MedWorkflow.Demo
 {
@@ -14,30 +7,14 @@ namespace MedWorkflow.Demo
     {
         static void Main(string[] args)
         {
-            var xmlString = File.ReadAllText(@"D:\WorkflowTemplatePoc.xml", Encoding.UTF8);
-            var template = XmlWorkflowTemplateParser.ParseFromString(xmlString);
-
-            var role = new ApproverRole()
-            {
-                Id = "1",
-                Name = "admin",
-                Description = "Role with administration rights"
-            };
-
-            var approver = new Approver()
-            {
-                ApproverId = "1",
-                Roles = new List<IApproverRole>() { role }
-            };
-
-            var context = new WorkflowExecutionContext() { Approver = approver };
-            var workflow = WorkflowInstanceFactory.Create(template, null, approver, context);
-            workflow.Submit("提交");
-            workflow.Approve("批准");
-            workflow.Reject("驳回");
-
-            Console.ReadKey(true);
+            NewInstanceAndSubmit();
         }
+
+        static void SimpleRun()
+        {
+            
+        }
+
 
         static void NewInstanceAndSubmit()
         {
@@ -56,8 +33,10 @@ namespace MedWorkflow.Demo
             //获取会话，通过会话进行流程相关操作
             var session = workflowEngine.Current;
 
-            var template = workflowEngine.AvailableWorkflowTemplates
-                .FirstOrDefault(p => p.TemplateUuid == "WFT123456");
+            //var template = workflowEngine.AvailableWorkflowTemplates
+            //    .FirstOrDefault(p => p.TemplateUuid == "WFT123456");
+
+            var template = workflowEngine.LoadWorkflowTemplate("WFT123456");
 
             var instance = session.NeWorkflowInstance(template, "Contract", "123456");
 

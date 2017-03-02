@@ -5,13 +5,16 @@ using MedWorkflow.Exceptions;
 
 namespace MedWorkflow.Repository
 {
-    public class WorkflowInstanceRepository:IWorkflowInstanceRepository
+    internal class WorkflowInstanceRepository
     {
-        private readonly IWorkflowTemplateRepository _workflowTemplateRepository;
+        private readonly WorkflowTemplateRepository _workflowTemplateRepository;
 
-        public WorkflowInstanceRepository(IWorkflowTemplateRepository workflowTemplateRepository)
+        private readonly DbContext _dbContext;
+
+        public WorkflowInstanceRepository(WorkflowTemplateRepository workflowTemplateRepository,DbContext dbContext)
         {
             _workflowTemplateRepository = workflowTemplateRepository;
+            _dbContext = dbContext;
         }
 
         /// <summary>
@@ -33,11 +36,9 @@ namespace MedWorkflow.Repository
             return workflowInstance;
         }
 
-        public void Save(IWorkflowInstance workflowInstance)
+        public void Save(WorkflowInstance workflowInstance)
         {
-            //需要先判断数据版本
-
-            //TODO: implement it
+            
         }
     }
 }

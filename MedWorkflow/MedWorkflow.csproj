@@ -66,15 +66,12 @@
     <Compile Include="Exceptions\WorkflowConflictException.cs" />
     <Compile Include="Factories\ActivityInstanceBuilder.cs" />
     <Compile Include="Factories\WorkflowTemplateBuilder.cs" />
+    <Compile Include="Form.cs" />
     <Compile Include="IPolicy.cs" />
     <Compile Include="ISessionProvider.cs" />
-    <Compile Include="IWorkflowExecutionContext.cs" />
     <Compile Include="IWorkflowSession.cs" />
     <Compile Include="PhantomSessionProvider.cs" />
-    <Compile Include="PhantomWorkflowSession.cs" />
-    <Compile Include="Repository\IActionRecordRepository.cs" />
-    <Compile Include="Repository\IWorkflowInstanceRepository.cs" />
-    <Compile Include="Repository\IWorkflowTemplateRepository.cs" />
+    <Compile Include="DefaultWorkflowSession.cs" />
     <Compile Include="Repository\WorkflowInstanceRepository.cs" />
     <Compile Include="Repository\WorkflowTemplateRepository.cs" />
     <Compile Include="Security\ApprovalRoleResolver.cs" />
@@ -99,7 +96,6 @@
     <Compile Include="IWorkflowEngine.cs" />
     <Compile Include="Configurations\IWorkflowEngineConfigurer.cs" />
     <Compile Include="IWorkflowInstance.cs" />
-    <Compile Include="Services\IWorkflowService.cs" />
     <Compile Include="IWorkflowTemplate.cs" />
     <Compile Include="OperationCode.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

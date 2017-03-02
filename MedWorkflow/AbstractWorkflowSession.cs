@@ -1,33 +1,27 @@
-﻿namespace MedWorkflow
+﻿using System;
+using System.Collections.Generic;
+using MedWorkflow.Data;
+using MedWorkflow.Factories;
+using MedWorkflow.Repository;
+using MedWorkflow.Security;
+
+namespace MedWorkflow
 {
-    public abstract class AbstractWorkflowSession:IWorkflowSession
+    public abstract class AbstractWorkflowSession : IWorkflowSession
     {
         protected AbstractWorkflowSession()
         {
-            
+
         }
 
-        public abstract Security.IApprover CurrentUser { get; }
+        public abstract IApprover CurrentUser { get; }
 
-        public void SaveInstance(IWorkflowInstance instance)
-        {
-            throw new System.NotImplementedException();
-        }
+        public abstract void SaveInstance(IWorkflowInstance instance);
 
-        public IWorkflowInstance LoadWorkflowInstance(string workflowInstanceId)
-        {
-            throw new System.NotImplementedException();
-        }
+        public abstract IWorkflowInstance LoadWorkflowInstance(string workflowInstanceId);
 
-
-        public IWorkflowInstance NeWorkflowInstance(IWorkflowTemplate template, string formType, string formId)
-        {
-            throw new System.NotImplementedException();
-        }
-
-        public System.Collections.Generic.IEnumerable<IWorkflowInstance> TodoList
-        {
-            get { throw new System.NotImplementedException(); }
-        }
+        public abstract IWorkflowInstance NeWorkflowInstance(IWorkflowTemplate template, string formType, string formId);
+        
+        public abstract IEnumerable<IWorkflowInstance> TodoList { get; }
     }
 }

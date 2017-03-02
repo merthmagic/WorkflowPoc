@@ -20,6 +20,8 @@ namespace MedWorkflow
 
         void Initialize();
 
-        IEnumerable<IWorkflowTemplate> AvailableWorkflowTemplates { get; } 
+        IEnumerable<IWorkflowTemplate> AvailableWorkflowTemplates { get; }
+
+        IWorkflowTemplate LoadWorkflowTemplate(string workflowTemplateId);
     }
 }

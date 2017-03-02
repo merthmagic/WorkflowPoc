@@ -21,12 +21,12 @@ namespace MedWorkflow
         private readonly IForm _form;
         private readonly IApprover _owner;
         private ICollection<AuditTrailEntry> _auditTrailEntries;
-        private readonly IWorkflowExecutionContext _executionContext;
+        private readonly WorkflowExecutionContext _executionContext;
         private bool _isDirty = true;
         private IActivityInstance _originateActivityInstance;
 
 
-        public WorkflowInstance(IWorkflowTemplate workflowTemplate, IForm form, IApprover owner, IWorkflowExecutionContext context)
+        public WorkflowInstance(IWorkflowTemplate workflowTemplate, IForm form, IApprover owner, WorkflowExecutionContext context)
         {
             _workflowTemplate = workflowTemplate;
             _form = form;
@@ -34,7 +34,7 @@ namespace MedWorkflow
             _executionContext = context;
         }
 
-        public WorkflowInstance(IWorkflowTemplate workflowTemplate, IForm form,IWorkflowExecutionContext context)
+        public WorkflowInstance(IWorkflowTemplate workflowTemplate, IForm form,WorkflowExecutionContext context)
         {
             _workflowTemplate = workflowTemplate;
             _form = form;
@@ -91,7 +91,7 @@ namespace MedWorkflow
         /// <summary>
         /// 执行上下文
         /// </summary>
-        public IWorkflowExecutionContext ExecutionContext
+        public WorkflowExecutionContext ExecutionContext
         {
             get { return _executionContext; }
         }
