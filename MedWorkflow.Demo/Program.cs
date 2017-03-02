@@ -15,8 +15,8 @@ namespace MedWorkflow.Demo
             var workflowEngine = EngineContext.Current;
 
             //注册一个模拟的Session Provider进行测试
-            var sessionProvider = new PhantomSessionProvider();
-            workflowEngine.RegisterSessionProvider(sessionProvider);
+            var sessionProvider = new PhantomUserCredentialsProvider();
+            workflowEngine.RegisterUserCredentialsProvider(sessionProvider);
 
             //注册事件处理方法如流程状态变化邮件通知等
             workflowEngine.OnWorkflowStateChanged += (sender, args) =>
@@ -25,7 +25,7 @@ namespace MedWorkflow.Demo
             };
 
             //获取会话，通过会话进行流程相关操作
-            var session = workflowEngine.Current;
+            var session = workflowEngine.WorkflowSession;
 
             var template = workflowEngine.LoadWorkflowTemplate("WFT123456");
 
@@ -42,11 +42,11 @@ namespace MedWorkflow.Demo
         {
             var workflowEngine = EngineContext.Current;
             //注册一个模拟的Session Provider进行测试
-            var sessionProvider = new PhantomSessionProvider();
+            var sessionProvider = new PhantomUserCredentialsProvider();
 
-            workflowEngine.RegisterSessionProvider(sessionProvider);
+            workflowEngine.RegisterUserCredentialsProvider(sessionProvider);
 
-            var session = workflowEngine.Current;
+            var session = workflowEngine.WorkflowSession;
 
             var instance =
                 session.TodoList.FirstOrDefault(p => p.Form.FormType == "Contract" && p.Form.FormId == "123456");

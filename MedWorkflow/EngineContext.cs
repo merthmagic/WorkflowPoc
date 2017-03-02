@@ -3,6 +3,7 @@
     public class EngineContext
     {
         private static IWorkflowEngine _workflowEngine;
+
         private static volatile object _mutex = new object();
 
         public static IWorkflowEngine Current

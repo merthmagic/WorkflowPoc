@@ -13,20 +13,7 @@ namespace MedWorkflow
 
         public override IApprover CurrentUser
         {
-            get
-            {
-                //TODO:这里是不合理设计，Roles初始化应该由Approver类完成
-                var approver = new Approver
-                {
-                    ApproverId = "admin123",
-                    Roles = new List<IApproverRole>()
-                };
-                approver.Roles.AddRange(new List<ApproverRole>()
-                {
-                    new ApproverRole(){Id = "1",Name = "admin"}
-                });
-                return approver;
-            }
+            get { return EngineContext.Current.RegisteredUserCredentialsProviderProvider.Current; }
         }
 
         public override void SaveInstance(IWorkflowInstance instance)

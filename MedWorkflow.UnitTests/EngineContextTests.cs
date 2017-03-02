@@ -17,8 +17,8 @@ namespace MedWorkflow.UnitTests
         public void EngineIntialization()
         {
             var engine = EngineContext.Current;
-            engine.RegisterSessionProvider(new PhantomSessionProvider());
-            var user = engine.Current.CurrentUser;
+            engine.RegisterUserCredentialsProvider(new PhantomUserCredentialsProvider());
+            var user = engine.WorkflowSession.CurrentUser;
             Assert.IsNotNull(user);
             Assert.AreEqual("admin123",user.ApproverId);
             Assert.IsNotNull(user.Roles);

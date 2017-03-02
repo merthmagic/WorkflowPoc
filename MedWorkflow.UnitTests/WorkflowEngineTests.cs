@@ -11,7 +11,7 @@ namespace MedWorkflow.UnitTests
         public void Setup()
         {
             _workflowEngine = EngineContext.Current;
-            _workflowEngine.RegisterSessionProvider(new PhantomSessionProvider());
+            _workflowEngine.RegisterUserCredentialsProvider(new PhantomUserCredentialsProvider());
         }
 
         [Test]

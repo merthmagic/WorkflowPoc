@@ -12,14 +12,16 @@ namespace MedWorkflow
         /// </summary>
         event WorkflowStateChangedEventHandler OnWorkflowStateChanged;
 
-        IWorkflowSession Current { get; }
+        IWorkflowSession WorkflowSession { get; }
 
-        void RegisterSessionProvider(ISessionProvider sessionProvider);
+        void RegisterUserCredentialsProvider(IUserCredentialsProvider sessionProvider);
 
         void Initialize();
 
         IEnumerable<IWorkflowTemplate> AvailableWorkflowTemplates { get; }
 
         IWorkflowTemplate LoadWorkflowTemplate(string workflowTemplateId);
+
+        IUserCredentialsProvider RegisteredUserCredentialsProviderProvider { get; }
     }
 }

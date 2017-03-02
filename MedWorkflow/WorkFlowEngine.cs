@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using MedWorkflow.Exceptions;
 using MedWorkflow.Repository;
 
 namespace MedWorkflow
@@ -9,7 +10,7 @@ namespace MedWorkflow
     /// </summary>
     internal class WorkFlowEngine : IWorkflowEngine
     {
-        private ISessionProvider _sessionProvider;
+        private IUserCredentialsProvider _userCredentialsProvider;
 
         private readonly WorkflowTemplateRepository _workflowTemplateRepository;
 
@@ -21,14 +22,18 @@ namespace MedWorkflow
             _workflowTemplateRepository = new WorkflowTemplateRepository();
         }
 
-        public IWorkflowSession Current
+        public IWorkflowSession WorkflowSession
         {
-            get { return _sessionProvider.Current; }
+            get
+            {
+                var session = new DefaultWorkflowSession();
+                return session;
+            }
         }
 
-        public void RegisterSessionProvider(ISessionProvider sessionProvider)
+        public void RegisterUserCredentialsProvider(IUserCredentialsProvider userCredentialsProvider)
         {
-            _sessionProvider = sessionProvider;
+            _userCredentialsProvider = userCredentialsProvider;
         }
 
         public void Initialize()
@@ -44,6 +49,17 @@ namespace MedWorkflow
         public IWorkflowTemplate LoadWorkflowTemplate(string workflowTemplateId)
         {
             return _workflowTemplateRepository.Find(workflowTemplateId);
+        }
+
+
+        public IUserCredentialsProvider RegisteredUserCredentialsProviderProvider
+        {
+            get
+            {
+                if (_userCredentialsProvider == null)
+                    throw new IllegalStateException("未注册Session Provider");
+                return _userCredentialsProvider;
+            }
         }
     }
 }

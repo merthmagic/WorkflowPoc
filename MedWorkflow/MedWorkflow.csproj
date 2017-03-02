@@ -69,9 +69,9 @@
     <Compile Include="Form.cs" />
     <Compile Include="IBusinessBase.cs" />
     <Compile Include="IPolicy.cs" />
-    <Compile Include="ISessionProvider.cs" />
+    <Compile Include="IUserCredentialsProvider.cs" />
     <Compile Include="IWorkflowSession.cs" />
-    <Compile Include="PhantomSessionProvider.cs" />
+    <Compile Include="PhantomUserCredentialsProvider.cs" />
     <Compile Include="DefaultWorkflowSession.cs" />
     <Compile Include="Repository\WorkflowInstanceRepository.cs" />
     <Compile Include="Repository\WorkflowTemplateRepository.cs" />
