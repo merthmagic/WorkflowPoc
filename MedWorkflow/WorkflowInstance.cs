@@ -28,6 +28,7 @@ namespace MedWorkflow
 
         public WorkflowInstance(IWorkflowTemplate workflowTemplate, IForm form, IApprover owner, WorkflowExecutionContext context)
         {
+            WorkflowInstanceId = Guid.NewGuid().ToString();
             _workflowTemplate = workflowTemplate;
             _form = form;
             _owner = owner;
@@ -37,6 +38,7 @@ namespace MedWorkflow
 
         public WorkflowInstance(IWorkflowTemplate workflowTemplate, IForm form, WorkflowExecutionContext context)
         {
+            WorkflowInstanceId = Guid.NewGuid().ToString();
             _workflowTemplate = workflowTemplate;
             _form = form;
             _executionContext = context;
@@ -74,6 +76,14 @@ namespace MedWorkflow
         public long InstanceVersion { get; set; }
 
         public IActivityInstance Current { get; set; }
+
+        public IActivityInstance OriginateActivityInstance
+        {
+            get
+            {
+                return _originateActivityInstance;
+            }
+        }
 
         public WorkflowExecutionContext ExecutionContext
         {
@@ -154,8 +164,13 @@ namespace MedWorkflow
             var activityTemplate = Current.ActivityTemplate.AllowedActions.FirstOrDefault(p => p.OperationCode == OperationCode.Approve)
                 .Transit;
             var nextActivityInstance = NewActivityInstance(activityTemplate);
+
             _originateActivityInstance = Current;
+            _originateActivityInstance.MarkFinish();
+
             Current = nextActivityInstance;
+
+            _isDirty = true;
         }
 
         public void Cancel(string comment)
@@ -207,6 +222,10 @@ namespace MedWorkflow
         public void MarkOld()
         {
             _isNew = false;
+            _isDirty = false;
+
+            _originateActivityInstance.MarkOld();
+            Current.MarkOld();
         }
 
         public override string ToString()

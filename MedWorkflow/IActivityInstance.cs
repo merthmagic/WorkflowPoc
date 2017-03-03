@@ -6,6 +6,8 @@ namespace MedWorkflow
 {
     public interface IActivityInstance:IBusinessBase
     {
+        string ActivityInstanceId { get; }
+
         IActivityTemplate ActivityTemplate { get; }
 
         /// <summary>

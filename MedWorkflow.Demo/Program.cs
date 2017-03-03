@@ -1,4 +1,6 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
+using MedWorkflow.Data;
 using MedWorkflow.Exceptions;
 
 namespace MedWorkflow.Demo
@@ -7,7 +9,13 @@ namespace MedWorkflow.Demo
     {
         static void Main(string[] args)
         {
+            
             NewInstanceAndSubmit();
+
+            //ApproveExistInstance();
+
+            Console.WriteLine("Press any key to continue...");
+            Console.ReadKey(true);
         }
 
         static void NewInstanceAndSubmit()
@@ -34,7 +42,7 @@ namespace MedWorkflow.Demo
             instance.Submit("提交申请");
             session.SaveInstance(instance);
 
-            instance.Approve("批准");
+            instance.Approve("审核通过");
             session.SaveInstance(instance);
         }
 
@@ -48,8 +56,8 @@ namespace MedWorkflow.Demo
 
             var session = workflowEngine.NewSession();
 
-            var instance =
-                session.TodoList.FirstOrDefault(p => p.Form.FormType == "Contract" && p.Form.FormId == "123456");
+            var instance = session.LoadWorkflowInstance("");
+
             if (instance == null)
                 throw new IllegalStateException("流程不存在");
 

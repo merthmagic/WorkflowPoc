@@ -1,11 +1,22 @@
 ﻿using System.Collections.Generic;
+using MedWorkflow.Data;
+using MedWorkflow.Data.Mapper;
 using MedWorkflow.Factories;
+using MedWorkflow.Repository;
 using MedWorkflow.Security;
 
 namespace MedWorkflow
 {
     internal class DefaultWorkflowSession : AbstractWorkflowSession
     {
+        private readonly WorkflowInstanceRepository _workflowInstanceRepository;
+
+        public DefaultWorkflowSession()
+        {
+            var workflowTemplateRepository  = new WorkflowTemplateRepository();
+            _workflowInstanceRepository = new WorkflowInstanceRepository(workflowTemplateRepository);
+        }
+
         public override IApprover CurrentUser
         {
             get { return EngineContext.Current.RegisteredUserCredentialsProviderProvider.Current; }
@@ -13,12 +24,12 @@ namespace MedWorkflow
 
         public override void SaveInstance(IWorkflowInstance instance)
         {
-            throw new System.NotImplementedException();
+            _workflowInstanceRepository.Save(instance);
         }
 
         public override IWorkflowInstance LoadWorkflowInstance(string workflowInstanceId)
         {
-            throw new System.NotImplementedException();
+            return _workflowInstanceRepository.Find(workflowInstanceId);
         }
 
         public override IWorkflowInstance NewWorkflowInstance(IWorkflowTemplate template, string formType, string formId)

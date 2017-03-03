@@ -6,9 +6,16 @@ namespace MedWorkflow
     internal class ActivityInstance : IActivityInstance
     {
         private readonly ICollection<ActionRecord> _actionRecords = new List<ActionRecord>();
-        
+
+        private bool _isNew;
+        private bool _isDirty;
+        private readonly bool _isTransient;
+
         public ActivityInstance()
         {
+            _isDirty = true;
+            _isNew = true;
+            _isTransient = false;
             Status = ActivityInstanceStatus.Working;
         }
 
@@ -25,6 +32,7 @@ namespace MedWorkflow
         public void MarkFinish()
         {
             Status = ActivityInstanceStatus.Finished;
+            _isDirty = true;
         }
 
 
@@ -42,17 +50,25 @@ namespace MedWorkflow
 
         public bool IsNew
         {
-            get { throw new NotImplementedException(); }
+            get { return _isNew;}
         }
 
         public bool IsDirty
         {
-            get { throw new NotImplementedException(); }
+            get { return _isDirty; }
         }
 
         public bool IsTransient
         {
-            get { throw new NotImplementedException(); }
+            get { return _isTransient; }
         }
+
+        public void MarkOld()
+        {
+            _isDirty = false;
+            _isNew = false;
+        }
+
+        public string ActivityInstanceId { get; internal set; }
     }
 }

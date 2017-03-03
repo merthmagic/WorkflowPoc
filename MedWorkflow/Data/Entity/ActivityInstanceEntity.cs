@@ -15,5 +15,7 @@ namespace MedWorkflow.Data.Entity
         public DateTime CREATED_ON { get; set; }
 
         public DateTime LAST_UPDATED_ON { get; set; }
+
+        public string POLICY_DESCRIPTOR { get; set; }
     }
 }

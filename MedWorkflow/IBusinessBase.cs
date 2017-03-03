@@ -9,5 +9,7 @@ namespace MedWorkflow
         bool IsDirty { get; }
 
         bool IsTransient { get; }
+
+        void MarkOld();
     }
 }

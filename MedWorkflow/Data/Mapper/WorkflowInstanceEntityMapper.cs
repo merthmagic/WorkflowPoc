@@ -28,7 +28,17 @@ namespace MedWorkflow.Data.Mapper
 
         public override int Insert(WorkflowInstanceEntity entity)
         {
-            throw new System.NotImplementedException();
+            const string sql = @"INSERT INTO MSC_WORKFLOW_INSTANCE VALUES(
+                                    :WORKFLOW_INSTANCE_ID,
+                                    :WORKFLOW_TEMPLATE_ID,
+                                    :FORM_TYPE,
+                                    :FORM_ID,
+                                    :OWNER_ID,
+                                    :CREATED_ON,
+                                    :LAST_UPDATED_ON,
+                                    :INSTANCE_VERSION,
+                                    :STATUS)";
+            return Context.Connection.Execute(sql, entity,Context.Transaction);
         }
 
         /// <summary>

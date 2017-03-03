@@ -45,6 +45,8 @@ namespace MedWorkflow
         /// </summary>
         IActivityInstance Current { get; }
 
+        IActivityInstance OriginateActivityInstance { get; }
+
         #region Operations
         void Submit(string comment);
 

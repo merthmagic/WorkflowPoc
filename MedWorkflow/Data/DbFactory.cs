@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Configuration;
 using System.Data;
+using Oracle.ManagedDataAccess.Client;
 
 namespace MedWorkflow.Data
 {
@@ -7,7 +9,16 @@ namespace MedWorkflow.Data
     {
         public static IDbConnection GetConnection()
         {
-            throw new NotImplementedException();
-        } 
+            var connString = ConfigurationManager.ConnectionStrings["msc"].ConnectionString;
+            return new OracleConnection(connString);
+        }
+
+        public static DbContext GetDbContext()
+        {
+            var conn = GetConnection();
+            conn.Open();
+            var trans = conn.BeginTransaction();
+            return new DbContext(conn,trans);
+        }
     }
 }
