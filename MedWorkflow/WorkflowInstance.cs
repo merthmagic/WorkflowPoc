@@ -144,7 +144,11 @@ namespace MedWorkflow
             }
 
             //相应的创建Action实例
-            var actionRecord = new ActionRecord();
+            var actionRecord = new ActionRecord()
+            {
+                ActivityInstanceId = Current.ActivityInstanceId,
+                RequiredRole = Current.ActivityTemplate.RequiredRole.Id
+            };
             Current.AddAction(actionRecord);
 
             //当前节点替换

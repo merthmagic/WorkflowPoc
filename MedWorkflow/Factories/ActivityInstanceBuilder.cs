@@ -16,7 +16,8 @@ namespace MedWorkflow.Factories
             {
                 ActivityTemplate = _activityTemplate,
                 CreatedOn = DateTime.Now,
-                LastUpdatedOn = DateTime.Now
+                LastUpdatedOn = DateTime.Now,
+                ActivityInstanceId = Guid.NewGuid().ToString()
             };
         }
 
@@ -25,6 +26,7 @@ namespace MedWorkflow.Factories
             
             if(_actionRecords != null && _actionRecords.Count>0)
                 _actionRecords.ForEach(p=>_instance.AddAction(p));
+            
             return _instance;
         }
 

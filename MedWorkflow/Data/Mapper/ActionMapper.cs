@@ -19,12 +19,15 @@ namespace MedWorkflow.Data.Mapper
         public override int Insert(ActionEntity entity)
         {
             const string sql = @"INSERT INTO MSC_ACTION VALUES (
-                                :WORKFLOW_TEMPLATE_UUID,
-                                :WORKFLOW_NAME,
-                                :WORKFLOW_TEMPLATE_VERSION,
-                                :WORKFLOW_TEMPLATE_URI,
-                                :CREATED_ON,
-                                :IS_ENABLE
+                               :ACTION_ID,
+                               :ACTIVITY_INSTANCE_ID,
+                               :OPERATION_CODE,
+                               :REQUIRED_ROLE,
+                               :REQUIRED_OPERATOR_TYPE,
+                               :CREATED_ON,
+                               :LAST_UPDATED_ON,
+                               :APPROVER_REQUIRED,
+                               :STATUS
                                  )";
             return Context.Connection.Execute(sql, entity, Context.Transaction);
         }

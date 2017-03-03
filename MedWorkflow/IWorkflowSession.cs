@@ -16,6 +16,8 @@ namespace MedWorkflow
 
         IWorkflowInstance LoadWorkflowInstance(string workflowInstanceId);
 
-        IEnumerable<IWorkflowInstance> TodoList { get; } 
+        IEnumerable<IWorkflowInstance> TodoList { get; }
+
+        IEnumerable<IWorkflowInstance> OwnedInstances { get; } 
     }
 }

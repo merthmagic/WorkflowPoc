@@ -23,5 +23,11 @@ namespace MedWorkflow
         public abstract IWorkflowInstance NewWorkflowInstance(IWorkflowTemplate template, string formType, string formId);
         
         public abstract IEnumerable<IWorkflowInstance> TodoList { get; }
+
+
+        public IEnumerable<IWorkflowInstance> OwnedInstances
+        {
+            get { throw new NotImplementedException(); }
+        }
     }
 }

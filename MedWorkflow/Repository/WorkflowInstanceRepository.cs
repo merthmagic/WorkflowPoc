@@ -43,7 +43,7 @@ namespace MedWorkflow.Repository
                         Insert(workflowInstance, dbContext);
 
                     else if (workflowInstance.IsDirty)
-                        Update(workflowInstance,dbContext);
+                        Update(workflowInstance, dbContext);
 
                     dbContext.Transaction.Commit();
                 }
@@ -79,12 +79,18 @@ namespace MedWorkflow.Repository
             workflowInstance.MarkOld();
         }
 
-        private void SaveActivityInstance(IActivityInstance activityInstance,string workflowInstanceId, DbContext dbContext)
+        private void SaveActivityInstance(IActivityInstance activityInstance, string workflowInstanceId, DbContext dbContext)
         {
-            if(activityInstance.IsNew)
-                InsertActivityInstance(activityInstance,workflowInstanceId,dbContext);
-            else if(activityInstance.IsDirty)
-                UpdateActivityInstance(activityInstance,dbContext);
+            if (activityInstance.IsNew)
+            {
+                InsertActivityInstance(activityInstance, workflowInstanceId, dbContext);
+                foreach (var action in activityInstance.ActionRecords)
+                {
+                    SaveAction(action, activityInstance.ActivityInstanceId, dbContext);
+                }
+            }
+            else if (activityInstance.IsDirty)
+                UpdateActivityInstance(activityInstance, dbContext);
         }
 
         private void InsertActivityInstance(IActivityInstance activityInstance, string workflowInstanceId, DbContext dbContext)
@@ -106,7 +112,7 @@ namespace MedWorkflow.Repository
             wfActivityMapper.Insert(activityInstanceEntity);
         }
 
-        private void UpdateActivityInstance(IActivityInstance activityInstance,  DbContext dbContext)
+        private void UpdateActivityInstance(IActivityInstance activityInstance, DbContext dbContext)
         {
             var wfActivityMapper = new ActivityInstanceMapper(dbContext);
 
@@ -120,16 +126,34 @@ namespace MedWorkflow.Repository
             wfActivityMapper.UpdateByPrimaryKeySelective(activityInstanceEntity);
         }
 
-        private void InsertAction(IAction actionInstance)
+        private void SaveAction(ActionRecord actionInstance, string activityInstanceId, DbContext dbContext)
         {
-
+            if (actionInstance.IsNew)
+                InsertAction(actionInstance, activityInstanceId, dbContext);
         }
 
-        private void Update(IWorkflowInstance workflowInstance,DbContext context)
+        private void InsertAction(ActionRecord actionInstance, string activityInstanceId, DbContext dbContext)
         {
-            
+            var actionRecordMapper = new ActionMapper(dbContext);
+            var actionEntity = new ActionEntity
+            {
+                ACTION_ID = actionInstance.ActionId ?? Guid.NewGuid().ToString(),
+                ACTIVITY_INSTANCE_ID = activityInstanceId,
+                APPROVER_REQUIRED = "PLACEHOLDER",
+                CREATED_ON = DateTime.Now,
+                LAST_UPDATED_ON = DateTime.Now,
+                OPERATION_CODE = "UNSET",
+                REQUIRED_OPERATOR_TYPE = 1,
+                REQUIRED_ROLE = actionInstance.RequiredRole
+            };
+            actionRecordMapper.Insert(actionEntity);
+        }
+
+        private void Update(IWorkflowInstance workflowInstance, DbContext context)
+        {
+
             SaveActivityInstance(workflowInstance.OriginateActivityInstance,
-                workflowInstance.WorkflowInstanceId,context);
+                workflowInstance.WorkflowInstanceId, context);
             SaveActivityInstance(workflowInstance.Current,
                 workflowInstance.WorkflowInstanceId, context);
         }

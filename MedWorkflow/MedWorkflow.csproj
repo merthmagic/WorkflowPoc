@@ -55,6 +55,7 @@
     <Compile Include="ActivityTemplate.cs" />
     <Compile Include="AssignSpecification.cs" />
     <Compile Include="Configurations\EnvConfiguration.cs" />
+    <Compile Include="ContractAppralFacade.cs" />
     <Compile Include="Data\DataManager.cs" />
     <Compile Include="Data\DbContext.cs" />
     <Compile Include="Data\DbFactory.cs" />
@@ -108,6 +109,9 @@
     <Compile Include="Utils\PolicyResolver.cs" />
     <Compile Include="Utils\WorkflowTemplateValidator.cs" />
     <Compile Include="Utils\XmlWorkflowTemplateParser.cs" />
+    <Compile Include="ValueObjects\ApprovableForm.cs" />
+    <Compile Include="ValueObjects\FormType.cs" />
+    <Compile Include="ValueObjects\WorkflowInstanceSummary.cs" />
     <Compile Include="WorkflowDelegates.cs" />
     <Compile Include="WorkFlowEngine.cs" />
     <Compile Include="WorkflowExecutionContext.cs" />

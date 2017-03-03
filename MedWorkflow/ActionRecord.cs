@@ -24,7 +24,15 @@
 
         public void MarkOld()
         {
-           IsDirty = false;
+            IsDirty = false;
         }
+
+        public string ActivityInstanceId { get; internal set; }
+
+        public string RequiredRole { get; set; }
+
+        public string RequiredApprover { get; set; }
+
+        public string ActionId { get; internal set; }
     }
 }

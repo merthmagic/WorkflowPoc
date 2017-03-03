@@ -5,6 +5,7 @@ using System.Text;
 using System.Xml;
 using System.Xml.Linq;
 using MedWorkflow.Factories;
+using MedWorkflow.Security;
 
 // ReSharper disable PossibleNullReferenceException
 
@@ -88,7 +89,12 @@ namespace MedWorkflow.Utils
 
             activityTemplate.ActivityTemplateId = activityTemplateId;
             activityTemplate.Name = activityTemplateName;
-            
+            activityTemplate.RequiredRole = new ApproverRole()
+            {
+                Id = "role123",
+                Name = "测试角色",
+                Description = "仅用于测试"
+            };
             var actionElements = element.Elements("Actions");
             foreach (var actionElem in actionElements.Elements("Action"))
             {
