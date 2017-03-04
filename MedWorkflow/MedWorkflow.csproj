@@ -61,10 +61,12 @@
     <Compile Include="Data\DbFactory.cs" />
     <Compile Include="Data\Entity\ActionEntity.cs" />
     <Compile Include="Data\Entity\ActivityInstanceEntity.cs" />
+    <Compile Include="Data\Entity\WorkflowBookmarkEntity.cs" />
     <Compile Include="Data\Entity\WorkflowInstanceEntity.cs" />
     <Compile Include="Data\Mapper\AbstractMapper.cs" />
     <Compile Include="Data\Mapper\ActionMapper.cs" />
     <Compile Include="Data\Mapper\ActivityInstanceMapper.cs" />
+    <Compile Include="Data\Mapper\WorkflowBookmarkMapper.cs" />
     <Compile Include="Data\Mapper\WorkflowInstanceEntityMapper.cs" />
     <Compile Include="EngineContext.cs" />
     <Compile Include="Enums.cs" />

@@ -15,7 +15,7 @@ namespace MedWorkflow
     /// <remarks>工作流业务聚合根</remarks>
     /// </summary>
     [SuppressMessage("ReSharper", "PossibleNullReferenceException")]
-    internal class WorkflowInstance :IWorkflowInstance
+    internal class WorkflowInstance : IWorkflowInstance
     {
         private readonly IWorkflowTemplate _workflowTemplate;
         private readonly IForm _form;
@@ -23,30 +23,31 @@ namespace MedWorkflow
         private ICollection<AuditTrailEntry> _auditTrailEntries;
         private readonly WorkflowExecutionContext _executionContext;
         private bool _isDirty = true;
-        private bool _isNew = true;
+        private bool _isNew;
         private IActivityInstance _originateActivityInstance;
 
         public WorkflowInstance(IWorkflowTemplate workflowTemplate, IForm form, IApprover owner, WorkflowExecutionContext context)
+            : this(workflowTemplate, form, context)
         {
-            WorkflowInstanceId = Guid.NewGuid().ToString();
-            _workflowTemplate = workflowTemplate;
-            _form = form;
             _owner = owner;
-            _executionContext = context;
-            _isNew = true;
         }
 
         public WorkflowInstance(IWorkflowTemplate workflowTemplate, IForm form, WorkflowExecutionContext context)
         {
-            WorkflowInstanceId = Guid.NewGuid().ToString();
+            WorkflowInstanceId = CreateWorkflowInstanceId();
             _workflowTemplate = workflowTemplate;
             _form = form;
             _executionContext = context;
             _isNew = true;
+            Status = WorkflowInstanceStatus.New;
+        }
+
+        private static string CreateWorkflowInstanceId()
+        {
+            return Guid.NewGuid().ToString();
         }
 
         public string WorkflowInstanceId { get; internal set; }
-
 
         public IWorkflowTemplate WorkflowTemplate
         {
@@ -77,7 +78,7 @@ namespace MedWorkflow
 
         public IActivityInstance Current { get; set; }
 
-        public IActivityInstance OriginateActivityInstance
+        public IActivityInstance OriginateActivity
         {
             get
             {
@@ -228,7 +229,8 @@ namespace MedWorkflow
             _isNew = false;
             _isDirty = false;
 
-            _originateActivityInstance.MarkOld();
+            if (_originateActivityInstance != null)
+                _originateActivityInstance.MarkOld();
             Current.MarkOld();
         }
 
@@ -251,5 +253,8 @@ namespace MedWorkflow
             }
             return false;
         }
+
+        public WorkflowInstanceStatus Status { get; internal set; }
+
     }
 }

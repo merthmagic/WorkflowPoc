@@ -38,12 +38,15 @@ namespace MedWorkflow.Demo
             var template = workflowEngine.LoadWorkflowTemplate("WFT123456");
 
             var instance = session.NewWorkflowInstance(template, "Contract", "123456");
-            //save
-            instance.Submit("提交申请");
+
             session.SaveInstance(instance);
 
-            instance.Approve("审核通过");
-            session.SaveInstance(instance);
+            //save
+            //instance.Submit("提交申请");
+            //session.SaveInstance(instance);
+
+            //instance.Approve("审核通过");
+            //session.SaveInstance(instance);
         }
 
         static void ApproveExistInstance()

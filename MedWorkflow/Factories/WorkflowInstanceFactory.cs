@@ -36,7 +36,7 @@ namespace MedWorkflow.Factories
             {
                 ActivityTemplate = template.Activities.First(),
                 CreatedOn = DateTime.Now,
-                LastUpdatedOn = DateTime.Now
+                LastUpdatedOn = DateTime.Now,
             };
             instance.Current = activityInstance;
             return instance;

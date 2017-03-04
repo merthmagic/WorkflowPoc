@@ -40,8 +40,6 @@ namespace MedWorkflow
         /// </summary>
         IEnumerable<ActionRecord> ActionRecords { get; }
 
-        ActionRecord Tail { get; }
-
         void AddAction(ActionRecord record);
     }
 }

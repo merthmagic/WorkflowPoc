@@ -41,8 +41,6 @@ namespace MedWorkflow
             get { return _actionRecords; }
         }
 
-        public ActionRecord Tail { get; private set; }
-
         public void AddAction(ActionRecord record)
         {
             _actionRecords.Add(record);

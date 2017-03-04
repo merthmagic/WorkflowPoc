@@ -73,7 +73,8 @@ namespace MedWorkflow.Repository
             };
             wfInstanceMapper.Insert(instanceEntity);
 
-            SaveActivityInstance(workflowInstance.OriginateActivityInstance, workflowInstance.WorkflowInstanceId, dbContext);
+            //新创建的workflow instance没有previous节点需要持久化
+            //SaveActivityInstance(workflowInstance.OriginateActivityInstance, workflowInstance.WorkflowInstanceId, dbContext);
             SaveActivityInstance(workflowInstance.Current, workflowInstance.WorkflowInstanceId, dbContext);
 
             workflowInstance.MarkOld();
@@ -105,7 +106,7 @@ namespace MedWorkflow.Repository
                 CREATED_ON = DateTime.Now,
                 LAST_UPDATED_ON = DateTime.Now,
                 WORKFLOW_INSTANCE_ID = workflowInstanceId,
-                STATUS = 1,
+                STATUS = (int)activityInstance.Status,
                 POLICY_DESCRIPTOR = "PHANTOM_DESCRIPTOR"
             };
 
@@ -152,7 +153,7 @@ namespace MedWorkflow.Repository
         private void Update(IWorkflowInstance workflowInstance, DbContext context)
         {
 
-            SaveActivityInstance(workflowInstance.OriginateActivityInstance,
+            SaveActivityInstance(workflowInstance.OriginateActivity,
                 workflowInstance.WorkflowInstanceId, context);
             SaveActivityInstance(workflowInstance.Current,
                 workflowInstance.WorkflowInstanceId, context);
