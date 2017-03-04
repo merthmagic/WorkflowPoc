@@ -136,7 +136,7 @@ namespace MedWorkflow.Repository
             var activityInstanceEntity = new ActivityInstanceEntity
             {
                 ACTIVITY_INSTANCE_ID = Guid.NewGuid().ToString(),
-                //TODO:conflict here
+                //TODO:conflict here (activity template id data type)
                 ACTIVITY_TEMPLATE_ID = activityInstance.ActivityTemplate.ActivityTemplateId.ToString(),
                 CREATED_ON = DateTime.Now,
                 LAST_UPDATED_ON = DateTime.Now,

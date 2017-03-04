@@ -10,12 +10,12 @@ namespace MedWorkflow.Web
 {
     public class HttpUserCredentialsProvider:IUserCredentialsProvider
     {
-        public Security.IApprover Current
+        public IApprover Current
         {
             get { return GetLogonApprover(); }
         }
 
-        private IApprover GetLogonApprover()
+        private static IApprover GetLogonApprover()
         {
             if (!HttpContext.Current.Request.IsAuthenticated)
                 throw new AuthenticationException();
