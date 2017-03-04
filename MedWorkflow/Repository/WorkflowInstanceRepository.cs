@@ -1,10 +1,8 @@
 ﻿using System;
-using Dapper;
+using System.Linq;
 using MedWorkflow.Data;
 using MedWorkflow.Data.Entity;
 using MedWorkflow.Data.Mapper;
-using MedWorkflow.Exceptions;
-using MedWorkflow.Factories;
 
 namespace MedWorkflow.Repository
 {
@@ -73,11 +71,48 @@ namespace MedWorkflow.Repository
             };
             wfInstanceMapper.Insert(instanceEntity);
 
+            var bookmark = CreateBookMark(workflowInstance);
+
+            SetBookMark(bookmark, dbContext);
+
             //新创建的workflow instance没有previous节点需要持久化
-            //SaveActivityInstance(workflowInstance.OriginateActivityInstance, workflowInstance.WorkflowInstanceId, dbContext);
             SaveActivityInstance(workflowInstance.Current, workflowInstance.WorkflowInstanceId, dbContext);
 
             workflowInstance.MarkOld();
+        }
+
+        private WorkflowBookmarkEntity CreateBookMark(IWorkflowInstance workflowInstance)
+        {
+            var allowedActions = string.Join(",",
+                workflowInstance.Current.ActivityTemplate.AllowedActions.Select(p => p.OperationCode.ToString())
+                    .ToList());
+            var bookmark = new WorkflowBookmarkEntity()
+            {
+                BOOKMARK_ID = Guid.NewGuid().ToString(),
+                CREATED_ON = DateTime.Now,
+                LAST_UPDATED_ON = DateTime.Now,
+                CURRENT_ACTIVITY_NAME = workflowInstance.Current.ActivityTemplate.Name,
+                NEXT_ACTIVITY_NAME = FindNextActivityTemplate(workflowInstance.Current.ActivityTemplate).Name,
+                ALLOWED_OPERATIONS = allowedActions,
+                FORM_TYPE = workflowInstance.Form.FormType,
+                FORM_ID = workflowInstance.Form.FormId,
+                WORKFLOW_INSTANCE_ID = workflowInstance.WorkflowInstanceId,
+                USER_ID = workflowInstance.Owner.ApproverId
+            };
+            return bookmark;
+        }
+
+        private IActivityTemplate FindNextActivityTemplate(IActivityTemplate template)
+        {
+            return
+                template.AllowedActions.First(
+                    p => p.OperationCode == OperationCode.Submit || p.OperationCode == OperationCode.Submit).Transit;
+        }
+
+        private void SetBookMark(WorkflowBookmarkEntity workflowBookmarkEntity, DbContext context)
+        {
+            var mapper = new WorkflowBookmarkMapper(context);
+            mapper.Insert(workflowBookmarkEntity);
         }
 
         private void SaveActivityInstance(IActivityInstance activityInstance, string workflowInstanceId, DbContext dbContext)

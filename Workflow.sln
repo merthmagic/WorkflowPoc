@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MedWorkflow.Demo", "MedWork
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MedWorkflow.Web", "MedWorkflow.Web\MedWorkflow.Web.csproj", "{640276E8-00CC-4C0E-AB69-1BBA906686B2}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MedWorkflow.WebDemo", "MedWorkflow.WebDemo\MedWorkflow.WebDemo.csproj", "{D2B5383F-D8D9-49A2-8939-B5C0F3500DCC}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +35,10 @@ Global
 		{640276E8-00CC-4C0E-AB69-1BBA906686B2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{640276E8-00CC-4C0E-AB69-1BBA906686B2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{640276E8-00CC-4C0E-AB69-1BBA906686B2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D2B5383F-D8D9-49A2-8939-B5C0F3500DCC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D2B5383F-D8D9-49A2-8939-B5C0F3500DCC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D2B5383F-D8D9-49A2-8939-B5C0F3500DCC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D2B5383F-D8D9-49A2-8939-B5C0F3500DCC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

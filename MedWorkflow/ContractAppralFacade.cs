@@ -13,7 +13,8 @@ namespace MedWorkflow
         public static void NewContractDraft(ApprovableForm form)
         {
             var session = EngineContext.Current.NewSession();
-            var instance = session.NewWorkflowInstance(null, form.FormType.ToString(), form.FormId);
+            var template = EngineContext.Current.LoadWorkflowTemplate("WFT123456");
+            var instance = session.NewWorkflowInstance(template, form.FormType.ToString(), form.FormId);
             session.SaveInstance(instance);
         }
 
@@ -23,7 +24,7 @@ namespace MedWorkflow
         /// <param name="formId"></param>
         public static void Submit(string formId)
         {
-
+            var session = EngineContext.Current.NewSession();
         }
 
         /// <summary>
