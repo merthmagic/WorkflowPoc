@@ -1,0 +1,60 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<workflow-templte name="合同会签流程" id="contract-commitee">
+  <state name="发起合同会签" type="start">
+    <transition to="合同草稿"></transition>
+  </state>
+
+  <activity name="合同草稿" type="task">
+    <task>
+      <assigment class="NewApplicationAssigment"></assigment>
+    </task>
+    <transition to="一站式审批">
+      <action class="SubmitApply"></action>
+    </transition>
+  </activity>
+
+  <activity name="一站式审批" type="task">
+    <task>
+      <assigment class="OnestopManagerApproveAssignment"></assigment>
+    </task>
+    <transition to="一站式审批(指派)">
+      <action class=""></action>
+    </transition>
+    <transition to="部门审批">
+      <action></action>
+    </transition>
+    <transition to="合同草稿">
+      <action></action>
+    </transition>
+  </activity>
+
+  <activity name="一站式审批(指派)" type="task">
+    <task>
+      <assignment class="OnestopWorkerApproveAssigment"></assignment>
+    </task>
+    <trasition to="部门审批">
+      <action class="ChooseDepartment">
+      </action>
+    </trasition>
+  </activity>
+
+  <acitivty name="部门审批" type="loop-task">
+    <assignment class="ContractCommiteeDepartmentAssign"></assignment>
+    <transition to="后续部门审批判断">
+      <action class="Approve"></action>
+    </transition>
+    <trasition to="合同草稿">
+      <action class="Reject"></action>
+    </trasition>
+  </acitivty>
+
+  <activity name="后续部门审批判断" type="decision">
+    <handler class=""></handler>
+    <transition to="部门审批">
+    </transition>
+    <transition to="结束">
+    </transition>
+  </activity>
+
+  <state name="结束" type="end"></state>
+</workflow-templte>

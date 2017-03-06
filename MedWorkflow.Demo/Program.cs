@@ -27,6 +27,12 @@ namespace MedWorkflow.Demo
             Console.ReadKey(true);
         }
 
+
+        static void Pvm()
+        {
+            
+        }
+
         static void NewInstanceAndSubmit()
         {
             var workflowEngine = EngineContext.Current;

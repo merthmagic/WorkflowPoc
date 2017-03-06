@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<WorkflowTemplate>
+    <ModelVersion>1.0</ModelVersion>
+    <Identifier>WFT123456</Identifier>
+    <Name>休假审批流</Name>
+    <Description>审批流POC</Description>
+    <Version>1</Version>
+    <Status>Active</Status>
+    <Activities>
+        <Activity id = "1" beginActivity="true">
+            <Name>申请提交</Name>
+            <Actions>
+                <Action operationCode="Submit" transit="2"/>
+                <Action operationCode="Cancel" />
+            </Actions>
+            <Approver descriptor="ROLE:OWNER"/>
+        </Activity>
+        <Activity id = "2">
+            <Name>主管审批</Name>
+            <Actions>
+                <Action operationCode="Approve" transit="3" />
+                <Action operationCode="Reject" transit="1" />
+                <Action operationCode="Delegate" />
+            </Actions>
+            <Approver descriptor="REF:SUPERIOR"/>
+        </Activity>
+        <Activity id = "3">
+            <Name>人资审批</Name>
+            <Actions>
+                <Action operationCode="Approve" transit="4" />
+                <Action operationCode="Reject" transit="1" />
+                <Action operationCode="Delegate" />
+            </Actions>
+            <Approver descriptor="ROLE:DEPT_HR"/>
+        </Activity>
+        <Activity id = "4" finalActivity="true">
+            <Name>BOSS审批</Name>
+            <Actions>
+                <Action operationCode="Approve" />
+                <Action operationCode="Reject" transit="1" />
+                <Action operationCode="Delegate" />
+                <Action operationCode="Assign" />
+            </Actions>
+            <Approver descriptor="ROLE:BOSS"/>
+        </Activity>
+    </Activities>
+</WorkflowTemplate>
